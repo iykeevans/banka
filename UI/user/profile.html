@@ -1,0 +1,210 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banka | Dashboard</title>
+  <style>
+    .accent--bg {
+      background: #F5F5F7;
+    }
+
+    .side-nav {
+      width: 20vw;
+      height: 100vh;
+      align-items: center;
+      color: #FFFFFF;
+    }
+
+    .side-nav__avatar {
+      background: white;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+    }
+
+    .mt-3 {
+      margin-top: 3em;
+    }
+
+    .my-2 {
+      margin: 2em 0;
+    }
+
+    .side-nav__avatar-img {
+      width: 80px;
+      height: 80px;
+      margin-left: 1.25em;
+      margin-top: 1em;
+    }
+
+    .side-nav__avatar-info {
+      margin-top: 2em;
+    }
+
+    .side-nav__links {
+      margin-top: 3em;
+    }
+
+    .side-nav__link {
+      color: #FFFFFF;
+      text-align: left;
+      display: block;
+      padding: 1em 3em;
+      width: 20vw;
+    }
+
+    .profile {
+      width: 80vw;
+      height: 100%;
+    }
+
+    .profile__header {
+      margin-bottom: 2%;
+      margin-top: 2%;
+      align-items: center;
+      border-bottom: 1px solid #E5E5E5;
+      padding-bottom: 1%;
+    }
+
+    .profile__header-title {
+      font-size: 1.3em;
+    }
+
+    .profile__avatar {
+      justify-content: center;
+    }
+
+    .form__wrapper {
+      margin: 1em 0;
+    }
+
+    .form__input {
+      font-size: 1.2em;
+      width: 47%;
+      padding: 0.5em 1em;
+      border: 1px solid #E5E5E5;
+      border-radius: 5px;
+    }
+
+    .form__password {
+      font-size: 1.2em;
+      margin-bottom: 1em;
+      color: #444444;
+    }
+
+    .form__button {
+      padding: 0.5em 1em;
+      font-size: 1.2em;
+      border: 1px solid;
+      border-radius: 5px;
+    }
+
+		@media screen and (max-width: 800px) {
+      .side-nav {
+        display: none !important;
+      }
+
+      .nav__side-nav {
+        display: flex !important;
+      }
+
+      .profile {
+        width: 100%;
+      }
+
+      .profile__header {
+        border: none;
+        margin-bottom: 1.5em;
+      }
+
+      .form__wrapper {
+        flex-direction: column;
+      }
+
+      .form__input {
+        width: 100%;
+        margin-bottom: 1em;
+      }
+
+      .form__button {
+        width: 100%;
+        margin-bottom: 3em;
+      }
+		}
+  </style>
+  <link rel="stylesheet" href="../css//main.css">
+</head>
+<body>
+  <main class="dashboard flexed accent--bg">
+
+    <nav class="side-nav flexed flexed--col primary--bg">
+
+      <div class="side-nav__avatar mt-3">
+        <span data-feather="user" class="side-nav__avatar-img primary"></span>
+      </div>
+
+      <div class="side-nav__avatar-info">
+        <p>Uche Jude</p>
+        <p>6171257181</p>
+      </div>
+      
+      <div class="side-nav__links">
+        <a href="#" class="side-nav__link">Create Account</a>
+        <a href="./transactions.html" class="side-nav__link">Transactions</a>
+        <a href="./profile.html" class="side-nav__link">Settings</a>
+      </div>
+      
+    </nav>
+
+    <div class="profile">
+      <div class="wrapper">
+
+        <div class="profile__header flexed spaced"> 
+          <p class="profile__header-title">Edit Profile</p>
+          <a href="#" class="nav__side-nav centered is-hidden">&#9776;</a>
+        </div>
+
+        <div class="profile__avatar flexed mt-2">
+          <div class="side-nav__avatar">
+            <span data-feather="user" class="side-nav__avatar-img primary"></span>
+          </div>
+        </div>
+
+        <form>
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="Username" class="form__input">
+            <input type="text" placeholder="Email" class="form__input">
+          </div>
+
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="First name" class="form__input">
+            <input type="text" placeholder="Last name" class="form__input">
+          </div>
+
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="Country" class="form__input">
+            <input type="text" placeholder="City" class="form__input">
+          </div>
+
+          <div>
+            <p class="form__password">Change Password</p>
+          </div>
+
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="Password" class="form__input">
+            <input type="text" placeholder="Confirm Password" class="form__input">
+          </div>
+
+          <button class="form__button secondary--bg">Update</button>
+          
+        </form>
+      </div>
+    </div>
+  </main>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>
+    feather.replace({ 'stroke-width': 0.5 })
+  </script>
+</body>
+</html>
