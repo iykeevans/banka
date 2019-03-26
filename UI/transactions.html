@@ -1,0 +1,272 @@
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Banka | Dashboard</title>
+  <style>
+    .accent--bg {
+      background: #F5F5F7;
+    }
+
+    .side-nav {
+      width: 20vw;
+      height: 100vh;
+      align-items: center;
+      color: #FFFFFF;
+    }
+
+    .side-nav__avatar {
+      background: white;
+      width: 120px;
+      height: 120px;
+      border-radius: 50%;
+      margin-top: 3em;
+    }
+
+    .side-nav__avatar-img {
+      width: 80px;
+      height: 80px;
+      margin-left: 1.25em;
+      margin-top: 1em;
+    }
+
+    .side-nav__avatar-info {
+      margin-top: 2em;
+    }
+
+    .side-nav__links {
+      margin-top: 3em;
+    }
+
+    .side-nav__link {
+      color: #FFFFFF;
+      text-align: left;
+      display: block;
+      padding: 1em 3em;
+      width: 20vw;
+    }
+
+    .transactions {
+      width: 80vw;
+      height: 100%;
+    }
+
+    .transactions__header {
+      margin-bottom: 2%;
+      margin-top: 2%;
+      align-items: center;
+      border-bottom: 1px solid #E5E5E5;
+      padding-bottom: 1%;
+    }
+
+    .transactions__header-title {
+      font-size: 1.3em;
+    }
+
+    .transactions__header-subtitle {
+      font-size: 0.9em;
+      margin-left: 3em;
+    }
+
+    .transactions__header-button {
+      border: 1px solid;
+      padding: 0.7em 1.2em;
+      border-radius: 5px;
+    }
+
+    .transactions__content {
+      align-items: center;
+    }
+
+    .transactions__content-search {
+      padding: 0.5em 1.5em;
+      font-size: 1em;
+      border-radius: 5px;
+      width: 40%;
+      border: 1px solid #E5E5E5
+    }
+
+    .transactions__content-button {
+      border: 1px solid #E5E5E5; padding: 0.3em;
+    }
+
+    .table {
+			width: 100%;
+      border-collapse: collapse;
+      margin-top: 3%;
+      color: #444444;
+		}
+
+    .table tr {
+      border: 1px solid #E5E5E5;
+      background: #FFFFFF;
+    }
+
+		.table td {
+			padding: 10px 20px;
+		}
+
+		@media screen and (max-width: 800px) {
+      .side-nav {
+        display: none !important;
+      }
+
+      .nav__side-nav {
+        display: flex !important;
+      }
+
+      .transactions {
+        width: 100%;
+      }
+
+      .transactions__header {
+        border: none;
+        margin-bottom: 1.5em;
+      }
+
+      .transactions__header-subtitle {
+        margin-left: 0;
+      }
+
+      .transactions__header-button {
+        display: none;
+      }
+
+			.table, 
+			.table tr,
+			.table tbody, 
+      .table td,
+      .transactions__header-title,
+      .transactions__header-subtitle {
+				display: block; 
+			}
+
+			.table__title {
+				position: absolute;
+				left: -9999px;
+				top: -9999px;
+			}
+
+      .table tr {
+        margin-top: 1em;
+        border: none;
+      }
+
+			.table td {
+				position: relative;
+				white-space: normal;
+				text-align: right;
+        border: 1px solid #E5E5E5;
+			}
+
+			.table td:before {
+				position: absolute;
+				top: 5px;
+				left: 5px;
+				width: 40%;
+				padding-right: 10px;
+				white-space: nowrap;
+				text-align: left;
+				font-weight: bold;
+				content: attr(tableHeadData);
+			}
+		}
+  </style>
+  <link rel="stylesheet" href="./css/main.css">
+</head>
+<body>
+  <main class="dashboard flexed accent--bg">
+
+    <nav class="side-nav flexed flexed--col primary--bg">
+
+      <div class="side-nav__avatar">
+        <span data-feather="user" class="side-nav__avatar-img primary"></span>
+      </div>
+      <div class="side-nav__avatar-info">
+        <p>Uche Jude</p>
+        <p>6171257181</p>
+      </div>
+      <div class="side-nav__links">
+        <a href="#" class="side-nav__link">Create Account</a>
+        <a href="#" class="side-nav__link">Transactions</a>
+        <a href="#" class="side-nav__link">Settings</a>
+      </div>
+      
+    </nav>
+
+    <div class="transactions">
+      <div class="wrapper">
+
+        <div class="transactions__header flexed spaced"> 
+          <div>
+            <p>
+              <span class="transactions__header-title">All Transactions</span>
+              <span class="transactions__header-subtitle">100 transactions</span>
+            </p>
+          </div>
+          <a href="#" class="nav__side-nav centered is-hidden">&#9776;</a>
+          <a href="#" class="transactions__header-button secondary--bg">Create Account</a>
+        </div>
+
+        <div class="transactions__content flexed spaced">
+          <input type="search" name="" id="" placeholder="Search" class="transactions__content-search">
+          <p>Sort by: Name</p>
+          <p>10-100 0f 100</p>
+          <div>
+            <button class="transactions__content-button">
+              <span data-feather="chevron-left"></span>
+            </button>
+            <button class="transactions__content-button">
+              <span data-feather="chevron-right"></span>
+            </button>
+          </div>
+        </div>
+
+        <table class="table">
+          <tr class="table__title">
+            <td>Account Number</td>
+            <td>Type</td>
+            <td>Cashier</td>
+            <td>Amount</td>
+            <td>Old Balance</td>
+            <td>New Balance</td>
+            <td>Date</td>
+          </tr>
+          <tr>
+            <td tableHeadData="Account Number">3127257181</td>
+            <td tableHeadData="Type">CREDIT</td>
+            <td tableHeadData="Cashier">1009</td>
+            <td tableHeadData="Amount">10,000</td>
+            <td tableHeadData="Old Balance">37,000</td>
+            <td tableHeadData="New Balance">27,000</td>
+            <td tableHeadData="Date">18-Mar-2019</td>
+          </tr>
+          <tr>
+            <td tableHeadData="Account Number">3127257181</td>
+            <td tableHeadData="Type">CREDIT</td>
+            <td tableHeadData="Cashier">1009</td>
+            <td tableHeadData="Amount">10,000</td>
+            <td tableHeadData="Old Balance">37,000</td>
+            <td tableHeadData="New Balance">27,000</td>
+            <td tableHeadData="Date">18-Mar-2019</td>
+          </tr>
+          <tr>
+            <td tableHeadData="Account Number">3127257181</td>
+            <td tableHeadData="Type">CREDIT</td>
+            <td tableHeadData="Cashier">1009</td>
+            <td tableHeadData="Amount">10,000</td>
+            <td tableHeadData="Old Balance">37,000</td>
+            <td tableHeadData="New Balance">27,000</td>
+            <td tableHeadData="Date">18-Mar-2019</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </main>
+  <script src="https://unpkg.com/feather-icons"></script>
+  <script>
+    feather.replace({ 'stroke-width': 0.5 })
+  </script>
+</body>
+</html>
