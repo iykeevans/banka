@@ -9,11 +9,6 @@
       background: #F5F5F7;
     }
 
-    .active-one {
-      background: #FFFFFF;
-      color: #313158 !important;
-    }
-
     .side-nav {
       width: 20vw;
       height: 100vh;
@@ -30,14 +25,6 @@
 
     .mt-3 {
       margin-top: 3em;
-    }
-
-    .mt-2 {
-      margin-top: 2em;
-    }
-
-    .mt-1 {
-      margin-top: 1em;
     }
 
     .my-2 {
@@ -65,11 +52,6 @@
       display: block;
       padding: 1em 3em;
       width: 20vw;
-    }
-
-    .side-nav__link:hover {
-      color: #313158;
-      background: #FFFFFF;
     }
 
     .profile {
@@ -119,10 +101,6 @@
     }
 
 		@media screen and (max-width: 800px) {
-      .dashboard {
-        height: 100%;
-      }
-      
       .side-nav {
         display: none !important;
       }
@@ -155,26 +133,25 @@
       }
 		}
   </style>
-  <link rel="stylesheet" href="../css//main.css">
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
   <main class="dashboard flexed accent--bg">
 
     <nav class="side-nav flexed flexed--col primary--bg">
 
-      <div class="mt-3">
-        <p>STAFF</p>
-      </div>
-      <div class="side-nav__avatar mt-1">
+      <div class="side-nav__avatar mt-3">
         <span data-feather="user" class="side-nav__avatar-img primary"></span>
       </div>
 
       <div class="side-nav__avatar-info">
-        <p>John Doe</p>
+        <p>Uche Jude</p>
+        <p>6171257181</p>
       </div>
       
       <div class="side-nav__links">
-        <a href="./control.html" class="side-nav__link active-one">Control center</a>
+        <a href="./control.html" class="side-nav__link">Control center</a>
+        <a href="./create.html" class="side-nav__link">Create user</a>
         <a href="./account.html" class="side-nav__link">Accounts</a>
         <a href="./profile.html" class="side-nav__link">Settings</a>
       </div>
@@ -185,29 +162,42 @@
       <div class="wrapper">
 
         <div class="profile__header flexed spaced"> 
-          <p class="profile__header-title">Control center</p>
+          <p class="profile__header-title">Edit Profile</p>
           <a href="#" class="nav__side-nav centered is-hidden">&#9776;</a>
+        </div>
+
+        <div class="profile__avatar flexed mt-2">
+          <div class="side-nav__avatar">
+            <span data-feather="user" class="side-nav__avatar-img primary"></span>
+          </div>
         </div>
 
         <form>
           <div class="form__wrapper flexed spaced">
-            <select name="" id="" class="form__input">
-              <option disabled>Choose Action</option>
-              <option>CREDIT</option>
-              <option>DEBIT</option>
-            </select>
-            <input type="email" placeholder="Transaction ID" class="form__input">
-          </div>
-          <div class="form__wrapper flexed spaced">
-            <input type="email" placeholder="Account Number" class="form__input">
-            <input type="email" placeholder="Cashier" class="form__input">
-          </div>
-          <div class="form__wrapper flexed spaced">
-            <input type="email" placeholder="Amount" class="form__input">
-            <input type="email" placeholder="Account Balance" class="form__input">
+            <input type="text" placeholder="Username" class="form__input">
+            <input type="text" placeholder="Email" class="form__input">
           </div>
 
-          <button class="form__button secondary--bg">Submit</button>
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="First name" class="form__input">
+            <input type="text" placeholder="Last name" class="form__input">
+          </div>
+
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="Country" class="form__input">
+            <input type="text" placeholder="City" class="form__input">
+          </div>
+
+          <div>
+            <p class="form__password">Change Password</p>
+          </div>
+
+          <div class="form__wrapper flexed spaced">
+            <input type="text" placeholder="Password" class="form__input">
+            <input type="text" placeholder="Confirm Password" class="form__input">
+          </div>
+
+          <button class="form__button secondary--bg">Update</button>
           
         </form>
       </div>
