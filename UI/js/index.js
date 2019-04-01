@@ -4,29 +4,18 @@ const signUp = document.getElementById('sign-up');
 const formSignUp = document.getElementById('forms__sign-up');
 const formSignIn = document.getElementById('forms__sign-in');
 
-
 // function to show sign in options
-const showSignIn = () => {
-  signIn.className = 'sign-in flexed flexed--col is-hidden';
-  formSignUp.className = 'forms__sign-up flexed flexed--col is-hidden';
-  formSignIn.className = 'forms__sign-in flexed flexed--col';
-  signUp.className = 'sign-up flexed flexed--col secondary--bg';
+const showOptions = () => {
+  signIn.classList.toggle('is-hidden');
+  formSignUp.classList.toggle('is-hidden');
+  formSignIn.classList.toggle('is-hidden');
+  signUp.classList.toggle('is-hidden');
 }
 
-
-// function to show sign up options
-const showSignUp = () => {
-  signIn.className = 'sign-in flexed flexed--col primary--bg';
-  formSignUp.className = 'forms__sign-up flexed flexed--col';
-  formSignIn.className = 'forms__sign-in flexed flexed--col is-hidden';
-  signUp.className = 'sign-up flexed flexed--col is-hidden';
-}
-
-const myfunction = (event) => {
-  //event.preventDefault();
-  const auth = {}
-  event.target.forEach(element => {
-    console.log(element);
-  })
-  //console.log(event.target[0])
-}
+signInBtn.addEventListener('click', showOptions);
+signUpBtn.addEventListener('click', showOptions);
+mobileNavBtn.addEventListener('click', () => {
+  // nav.style.display = 'none'
+  // nav.classList.add('is-hidden');
+  // console.log(nav.style.display)
+});

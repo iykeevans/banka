@@ -7,27 +7,49 @@
   <link rel="stylesheet" href="./css/main.css"> 
 </head>
 <body>
+
+  <!--NAV MENU-->
   <nav class="nav">
-    <a href="#" class="nav__side-nav flexed centered">&#9776;</a>
-    <div class="wrapper nav__wrapper flexed spaced">
-      <a href="#" class="nav__brand flexed centered secondary">Banka</a>
+    
+    <div class="wrapper flexed spaced">
+      <a href="#" class="nav__brand flexed centered primary">Banka</a>
       <div class="nav__links flexed centered">
         <a href="#" class="nav__link active">Home</a>
         <a href="#" class="nav__link primary">Services</a>
         <a href="#" class="nav__link primary">About</a>
         <a href="./auth.html" class="nav__link primary">Login &nbsp;or &nbsp;Sign up</a>
       </div>
+      <a href="#nav" class="nav__side-nav flexed centered is-hidden">&#9776;</a>
     </div>
   </nav>
-  <div class="wrapper flexed centered">
-    <div class="hero__wrapper">
-      <h1 class="hero__heading primary">Online Banking</h1>
-      <p class="hero__sub-heading secondary">Cross platform application</p>
-      <a href="#" class="hero__button is-block secondary--bg">Try it now</a>
+
+  <!--HERO SECTION-->
+  <section class="hero">
+    <div class="flexed wrapper centered">
+      <div class="hero__wrapper">
+        <h1 class="hero__heading primary">Online Banking</h1>
+        <p class="hero__sub-heading secondary">Cross platform application</p>
+        <a href="./auth.html" class="hero__button is-block secondary--bg mt-1 radius">GET STARTED</a>
+      </div>
+
+      <figure class="hero__image-wrapper">
+        <img src="./img/banka-img.png" alt="" class="hero__image">
+      </figure>
     </div>
-    <figure class="hero__image-wrapper is-hidden">
-      <img src="./img/banka-img.png" alt="" class="hero__image">
-    </figure>
-  </div>
+  </section>
+
+  <!-- <section>
+    <div>
+
+    </div>
+  </section> -->
+
+  <!-- MOBILE NAV-->
+	<nav class="mobile-nav flexed flexed--col centered centered--col secondary--bg is-hidden" id="nav">
+		<a href="#" class="mobile-nav__close">X</a>
+		<a href="./index.html" class="mobile-nav__link">Home</a>
+		<a href="./auth.html" class="mobile-nav__link mt-1">Log in or Sign up</a>
+  </nav>
+
 </body>
 </html>
