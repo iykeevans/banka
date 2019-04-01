@@ -4,10 +4,10 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>Banka | Dashboard</title>
-  <link rel="stylesheet" href="../css//main.css">
+  <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-  <main class="dashboard flexed accent--bg">
+  <main class="flexed accent--bg">
 
     <nav class="side-nav flexed flexed--col primary--bg">
 
@@ -30,12 +30,12 @@
       
     </nav>
 
-    <div class="profile">
+    <div class="dashboard">
       <div class="wrapper">
 
-        <div class="profile__header flexed spaced"> 
-          <p class="profile__header-title">Control center</p>
-          <a href="#" class="nav__side-nav centered is-hidden">&#9776;</a>
+        <div class="dashboard__header flexed spaced"> 
+          <p class="dashboard__header-title">Control center</p>
+          <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
         </div>
 
         <form>
@@ -62,6 +62,15 @@
       </div>
     </div>
   </main>
+
+  <!-- MOBILE NAV-->
+	<nav class="mobile-nav flexed flexed--col centered centered--col secondary--bg is-hidden" id="nav">
+		<a href="#" class="mobile-nav__close">X</a>
+		<a href="./control.html" class="mobile-nav__link">Control center</a>
+		<a href="./account.html" class="mobile-nav__link mt-1">Accounts</a>
+		<a href="./profile.html" class="mobile-nav__link mt-1">Settings</a>
+  </nav>
+
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
     feather.replace({ 'stroke-width': 0.5 })

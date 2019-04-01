@@ -2,51 +2,72 @@
 <html>
 <head>
 	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Banka | Auth</title>
 	<link rel="stylesheet" href="./css/main.css">
 </head>
 <body>
-	<main class="flexed">
-		<div class="sign-in flexed flexed--col primary--bg" id="sign-in">
-			<a href="./index.html" class="brand" style="margin-left: 1.8em; margin-top: 0.5em;">Banka</a>
-			<div class="sign-in__wrapper center">
-				<h1 class="sign-in__heading">Welcome, back!</h1>
-				<p class="sign-in__subheading">To stay connected with us</p>
-				<p class="sign-in__subheading">please login with credentials</p>
-				<button class="sign-in__button" onclick="showSignIn()">Sign in</button>
+
+	<nav class="nav primary--bg is-hidden">
+		<div class="wrapper flexed spaced centered">
+			<a href="./index.html" style="font-size: 1.5em; color: white;">Banka</a>
+			<div>
+				<button class="radius" style="color: white; padding: 0.7em; background: transparent; border: 1px solid white;" onclick="showOptions()">
+					Log in or Sign up
+				</button>
 			</div>
 		</div>
+	</nav>
+
+	<main class="flexed">
+
+		<div class="auth flexed flexed--col primary--bg" id="sign-in">
+			
+			<div class="wrapper flexed flexed--col centered centered--col">
+				<h1 class="auth__heading">Welcome, back!</h1>
+				<p class="auth__subheading">To stay connected with us</p>
+				<p class="auth__subheading">please login with credentials</p>
+				<button class="auth__button radius" id="signInBtn">Sign in</button>
+			</div>
+		</div>
+
 		<div class="forms">
-			<div class="forms__sign-in flexed flexed--col is-hidden" id="forms__sign-in">
+
+			<div class="wrapper flexed flexed--col centered centered--col is-hidden" id="forms__sign-in">
 				<h1 class="forms__header">Sign in</h1>
-				<form class="flexed flexed--col">
+				<form class="wrapper--fluid flexed flexed--col">
 					<input type="text" placeholder="Email" class="forms__input">
 					<input type="text" placeholder="Password" class="forms__input">
 					<a href="#" class="forms__forgot">Forgot your password?</a>
-					<button class="forms__button primary--bg">Sign in</button>
+					<button class="forms__button radius primary--bg">Sign in</button>
 				</form>
 			</div>
-			<div class="forms__sign-up flexed flexed--col" id="forms__sign-up">
+
+			<div class="wrapper centered centered--col flexed flexed--col" id="forms__sign-up">
 				<h1 class="forms__header">Sign up</h1>
-				<form  onsubmit="myfunction(event)" class="flexed flexed--col">
+				<form class="wrapper--fluid flexed flexed--col">
 					<input type="text" placeholder="First name" class="forms__input">
 					<input type="text" placeholder="Last name" class="forms__input">
 					<input type="text" placeholder="Email" class="forms__input">
 					<input type="password" placeholder="Password" class="forms__input">
 					<input type="password" placeholder="Confirm Password" class="forms__input">
-					<button class="forms__button secondary--bg">Sign up</button>
+					<button class="forms__button radius secondary--bg">Sign up</button>
 				</form>
 			</div>
+
 		</div>
-		<div class="sign-up flexed secondary--bg flexed--col is-hidden" id="sign-up">
-			<div class="sign-up__wrapper flexed flexed--col">
-				<h1 class="sign-in__heading">Hello, Friend!</h1>
-				<p class="sign-in__subheading">Enter your personal details</p>
-				<p class="sign-in__subheading">and start your journey with us</p>
-				<button class="sign-in__button" onclick="showSignUp()">Sign up</button>
+
+		<div class="auth flexed flexed--col secondary--bg is-hidden" id="sign-up">
+			<div class="wrapper flexed flexed--col centered centered--col">
+				<h1 class="auth__heading">Hello, Friend!</h1>
+				<p class="auth__subheading">Enter your personal details</p>
+				<p class="auth__subheading">and start your journey with us</p>
+				<button class="auth__button radius" id="signUpBtn">Sign up</button>
 			</div>
 		</div>
+
 	</main>
+
 	<script src="./js/index.js"></script>
 </body>
 </html>

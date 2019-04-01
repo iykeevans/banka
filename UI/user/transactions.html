@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-  <main class="dashboard flexed accent--bg">
+  <main class="flexed accent--bg">
 
     <nav class="side-nav flexed flexed--col primary--bg">
 
@@ -26,29 +26,29 @@
       
     </nav>
 
-    <div class="transactions">
+    <div class="dashboard">
       <div class="wrapper">
 
-        <div class="transactions__header flexed spaced"> 
+        <div class="dashboard__header flexed spaced"> 
           <div>
             <p>
-              <span class="transactions__header-title">All Transactions</span>
-              <span class="transactions__header-subtitle">100 transactions</span>
+              <span class="dashboard__header-title">All dashboard</span>
+              <span class="dashboard__header-subtitle">100 dashboard</span>
             </p>
           </div>
-          <a href="#" class="nav__side-nav centered is-hidden">&#9776;</a>
-          <a href="#" class="transactions__header-button secondary--bg">Create Account</a>
+          <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
+          <a href="./create.html" class="dashboard__header-button secondary--bg">Create Account</a>
         </div>
 
-        <div class="transactions__content flexed spaced">
-          <input type="search" name="" id="" placeholder="Search" class="transactions__content-search">
+        <div class="dashboard__content flexed spaced">
+          <input type="search" name="" id="" placeholder="Search" class="dashboard__content-search">
           <div class="flexed centered spaced">
             <p>Sort by: Name</p>
             <p class="ml-2">10-100 0f 100</p>
-            <button class="transactions__content-button ml-2">
+            <button class="dashboard__content-button ml-2">
               <span data-feather="chevron-left"></span>
             </button>
-            <button class="transactions__content-button" style="margin-left: 0.5em;">
+            <button class="dashboard__content-button" style="margin-left: 0.5em;">
               <span data-feather="chevron-right"></span>
             </button>
           </div>
@@ -95,6 +95,15 @@
       </div>
     </div>
   </main>
+
+  <!-- MOBILE NAV-->
+	<nav class="mobile-nav flexed flexed--col centered centered--col secondary--bg is-hidden" id="nav">
+		<a href="#" style="position: absolute; left: 1em; top: 1em; font-size: 2em; color: white;">X</a>
+		<a href="./create.html" style="font-size: 2em; color: white;">Create Account</a>
+		<a href="./transactions.html" class="mt-1" style="font-size: 2em; color: white;">Transactions</a>
+		<a href="./profile.html" class="mt-1" style="font-size: 2em; color: white;">Settings</a>
+  </nav>
+  
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
     feather.replace({ 'stroke-width': 0.5 })

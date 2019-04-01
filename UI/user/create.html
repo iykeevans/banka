@@ -7,7 +7,7 @@
   <link rel="stylesheet" href="../css/main.css">
 </head>
 <body>
-  <main class="dashboard flexed accent--bg">
+  <main class="flexed accent--bg">
 
     <nav class="side-nav flexed flexed--col primary--bg">
 
@@ -28,12 +28,12 @@
       
     </nav>
 
-    <div class="create">
+    <div class="dashboard">
       <div class="wrapper">
 
-        <div class="create__header flexed spaced"> 
-          <p class="create__header-title">Create Account</p>
-          <a href="#" class="nav__side-nav centered is-hidden">&#9776;</a>
+        <div class="dashboard__header flexed spaced"> 
+          <p class="dashboard__header-title">Create Account</p>
+          <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
         </div>
 
         <form>
@@ -61,6 +61,15 @@
       </div>
     </div>
   </main>
+
+  <!-- MOBILE NAV-->
+	<nav class="mobile-nav flexed flexed--col centered centered--col secondary--bg is-hidden" id="nav">
+		<a href="#" style="position: absolute; left: 1em; top: 1em; font-size: 2em; color: white;">X</a>
+		<a href="./create.html" style="font-size: 2em; color: white;">Create Account</a>
+		<a href="./transactions.html" class="mt-1" style="font-size: 2em; color: white;">Transactions</a>
+		<a href="./profile.html" class="mt-1" style="font-size: 2em; color: white;">Settings</a>
+  </nav>
+  
   <script src="https://unpkg.com/feather-icons"></script>
   <script>
     feather.replace({ 'stroke-width': 0.5 })
