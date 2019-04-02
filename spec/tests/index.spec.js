@@ -8,7 +8,7 @@ describe('API Home test suite', () => {
       .expect(200)
       .then((response) => {
         expect(response.body.status).toBe(200);
-      })
-      .catch(error => console.log(error.message));
+        expect(response.body.message).toBe('welcome to the API');
+      });
   });
 });
