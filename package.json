@@ -4,7 +4,8 @@
   "description": "Banka is a light-weight core banking application that powers banking operations like account\r creation, customer deposit and withdrawals.",
   "main": "index.js",
   "scripts": {
-    "test": "jasmine"
+    "test": "jasmine",
+    "dev": "node server"
   },
   "repository": {
     "type": "git",
@@ -23,5 +24,9 @@
     "eslint-plugin-import": "^2.14.0",
     "jasmine": "^3.3.1",
     "supertest": "^4.0.2"
+  },
+  "dependencies": {
+    "body-parser": "^1.18.3",
+    "express": "^4.16.4"
   }
 }
