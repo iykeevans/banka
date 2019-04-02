@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/iykeevans/banka.svg?branch=develop)](https://travis-ci.org/iykeevans/banka) [![Coverage Status](https://coveralls.io/repos/github/iykeevans/banka/badge.svg?branch=develop)](https://coveralls.io/github/iykeevans/banka?branch=develop) [![Maintainability](https://api.codeclimate.com/v1/badges/04c3906572ce69feed57/maintainability)](https://codeclimate.com/github/iykeevans/banka/maintainability)
+
 # Banka
 
 
