@@ -32,3 +32,15 @@ exports.checkAccount = (data) => {
   });
   return schema.validate(data);
 };
+
+exports.checkTransaction = (data) => {
+  const schema = Joi.object().keys({
+    id: Joi.number().integer().required(),
+    accountNumber: Joi.number().integer().required(),
+    amount: Joi.number().required(),
+    cashier: Joi.number().integer().required(),
+    type: Joi.string().required(),
+    balance: Joi.string().required(),
+  });
+  return schema.validate(data);
+};
