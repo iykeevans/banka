@@ -81,3 +81,34 @@ describe('Delete account test suite', () => {
       });
   });
 });
+
+describe('Activate or deactivate account test suite', () => {
+  // delete account test
+  it('should activate or deactivate an account', (done) => {
+    const value = { status: 'active' };
+    chai
+      .request(app)
+      .patch('/api/v1/accounts/6171257181')
+      .send(value)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('status');
+        done();
+      });
+  });
+
+  // test validation
+  it('should return a delete account error', (done) => {
+    chai
+      .request(app)
+      .patch('/api/v1/accounts/6171257555')
+      .end((err, res) => {
+        expect(res.status).to.equal(500);
+        expect(res.body.status).to.equal(500);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
