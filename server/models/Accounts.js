@@ -21,3 +21,14 @@ exports.removeAccount = accountNumber => new Promise((resolve, reject) => {
     reject(new Error('Account doesn\'t exist'));
   }
 });
+
+exports.editStatus = (accountNumber, status) => new Promise((resolve, reject) => {
+  const account = accounts.findIndex(item => item.accountNumber === Number(accountNumber));
+  if (account !== -1) {
+    const data = accounts[account];
+    data.status = status;
+    resolve(data);
+  } else {
+    reject(new Error('Account doesn\'t exist'));
+  }
+});
