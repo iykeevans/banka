@@ -1,8 +1,8 @@
-const { debitTransaction } = require('../models/Transactions');
+const addTransaction = require('../models/Transactions');
 
-exports.debit = async (req, res) => {
+module.exports = async (req, res) => {
   try {
-    const transaction = await debitTransaction(req.body, req.params);
+    const transaction = await addTransaction(req.body, req.params);
     res.status(201).json({
       status: 201,
       data: transaction,
