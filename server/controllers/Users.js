@@ -1,6 +1,6 @@
 const { hash, genSaltSync } = require('bcrypt');
 const jwt = require('jsonwebtoken');
-const { addUser } = require('../models/Users');
+const { addUser, loginUser } = require('../models/Users');
 
 exports.signup = async (req, res) => {
   try {
@@ -25,6 +25,39 @@ exports.signup = async (req, res) => {
         email,
       },
     });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      error: error.message,
+    });
+  }
+};
+
+exports.login = async (req, res) => {
+  try {
+    const user = await loginUser(req.body);
+
+    if (!user) {
+      res.status(400).json({
+        status: 400,
+        error: 'bad request',
+      });
+    } else {
+      const token = await jwt.sign({ id: user.id },
+        'dancer',
+        { expiresIn: '1h' });
+
+      res.json({
+        status: 200,
+        data: {
+          token,
+          id: user.id,
+          firstName: user.firstName,
+          lastName: user.lastName,
+          email: user.email,
+        },
+      });
+    }
   } catch (error) {
     res.status(500).json({
       status: 500,

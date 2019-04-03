@@ -10,7 +10,13 @@ exports.checkSignup = (data) => {
     type: Joi.string().required(),
     isAdmin: Joi.string().default(false),
   });
+  return schema.validate(data);
+};
 
-  const result = schema.validate(data);
-  return result;
+exports.checkLogin = (data) => {
+  const schema = Joi.object().keys({
+    email: Joi.string().email().required(),
+    password: Joi.string().required(),
+  });
+  return schema.validate(data);
 };
