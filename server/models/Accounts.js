@@ -10,3 +10,14 @@ exports.addAccount = account => new Promise((resolve, reject) => {
     })
     .catch(error => reject(error));
 });
+
+exports.removeAccount = accountNumber => new Promise((resolve, reject) => {
+  const account = accounts.findIndex(item => item.accountNumber === Number(accountNumber));
+  if (account !== -1) {
+    const data = accounts[account];
+    accounts.splice(account, 1);
+    resolve(data);
+  } else {
+    reject(new Error('Account doesn\'t exist'));
+  }
+});

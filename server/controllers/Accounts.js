@@ -1,4 +1,4 @@
-const { addAccount } = require('../models/Accounts');
+const { addAccount, removeAccount } = require('../models/Accounts');
 
 exports.createAccount = async (req, res) => {
   try {
@@ -6,6 +6,21 @@ exports.createAccount = async (req, res) => {
     res.status(201).json({
       status: 201,
       data: account,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      error: error.message,
+    });
+  }
+};
+
+exports.deleteAccount = async (req, res) => {
+  try {
+    await removeAccount(req.params.accountNumber);
+    res.json({
+      status: 200,
+      message: 'Account successfully deleted',
     });
   } catch (error) {
     res.status(500).json({
