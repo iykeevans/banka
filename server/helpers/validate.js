@@ -20,3 +20,15 @@ exports.checkLogin = (data) => {
   });
   return schema.validate(data);
 };
+
+exports.checkAccount = (data) => {
+  const schema = Joi.object().keys({
+    id: Joi.number().integer().required(),
+    accountNumber: Joi.number().integer().required(),
+    firstName: Joi.string().required(),
+    lastName: Joi.string().required(),
+    email: Joi.string().email().required(),
+    type: Joi.string().required(),
+  });
+  return schema.validate(data);
+};
