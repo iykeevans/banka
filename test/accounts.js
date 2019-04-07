@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../server');
+const { goodAccount, badAccount } = require('./mockData/accounts');
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -9,18 +10,10 @@ chai.use(chaiHttp);
 describe('Create account test suite', () => {
   // create account test
   it('should create an account', (done) => {
-    const values = {
-      email: 'fluxie@gmail.com',
-      firstName: 'flux',
-      lastName: 'mel',
-      accountNumber: 6171257000,
-      type: 'savings',
-    };
-
     chai
       .request(app)
       .post('/api/v1/accounts')
-      .send(values)
+      .send(goodAccount)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
@@ -32,18 +25,10 @@ describe('Create account test suite', () => {
 
   // test validation
   it('should return a create account error', (done) => {
-    const values = {
-      email: 'fluxiegmail.com',
-      firstName: 'flux',
-      lastName: 'mel',
-      accountNumber: 6171257000,
-      type: 'savings',
-    };
-
     chai
       .request(app)
       .post('/api/v1/accounts')
-      .send(values)
+      .send(badAccount)
       .end((err, res) => {
         expect(res.status).to.equal(500);
         expect(res.body.status).to.equal(500);

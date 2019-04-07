@@ -17,7 +17,7 @@ exports.createAccount = async (req, res) => {
 
 exports.deleteAccount = async (req, res) => {
   try {
-    await removeAccount(req.params.accountNumber);
+    await removeAccount(req.params);
     res.json({
       status: 200,
       message: 'Account successfully deleted',
@@ -32,7 +32,7 @@ exports.deleteAccount = async (req, res) => {
 
 exports.changeStatus = async (req, res) => {
   try {
-    const { accountNumber, status } = await editStatus(req.params.accountNumber, req.body.status);
+    const { accountNumber, status } = await editStatus(req);
     res.json({
       status: 200,
       data: {

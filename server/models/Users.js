@@ -3,7 +3,7 @@ const { checkSignup, checkLogin } = require('../helpers/validate');
 
 exports.addUser = user => new Promise((resolve, reject) => {
   const id = { id: users.length + 1 };
-  checkSignup({ ...id, ...user })
+  checkSignup.validate({ ...id, ...user })
     .then((result) => {
       users.push(result);
       resolve(result);
@@ -12,7 +12,7 @@ exports.addUser = user => new Promise((resolve, reject) => {
 });
 
 exports.loginUser = data => new Promise((resolve, reject) => {
-  checkLogin(data)
+  checkLogin.validate(data)
     .then((result) => {
       const user = users.find(item => item.email === result.email);
       resolve(user);

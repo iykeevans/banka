@@ -1,6 +1,7 @@
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const app = require('../server');
+const { goodTransaction, badTransaction } = require('./mockData/transactions');
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -9,17 +10,10 @@ chai.use(chaiHttp);
 describe('debit transaction test suite', () => {
   // create transaction test
   it('should create a transaction', (done) => {
-    const values = {
-      amount: '5000',
-      cashier: '1001',
-      type: 'debit',
-      balance: '10000',
-    };
-
     chai
       .request(app)
       .post('/api/v1/transactions/617125781/debit')
-      .send(values)
+      .send(goodTransaction)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
@@ -31,16 +25,10 @@ describe('debit transaction test suite', () => {
 
   // test validation
   it('should return a create transaction error', (done) => {
-    const values = {
-      cashier: '1001',
-      type: 'debit',
-      balance: '10000',
-    };
-
     chai
       .request(app)
       .post('/api/v1/transactions/61712578144/debit')
-      .send(values)
+      .send(badTransaction)
       .end((err, res) => {
         expect(res.status).to.equal(500);
         expect(res.body.status).to.equal(500);
@@ -53,17 +41,10 @@ describe('debit transaction test suite', () => {
 describe('Credit transaction test suite', () => {
   // create transaction test
   it('should create a transaction', (done) => {
-    const values = {
-      amount: '5000',
-      cashier: '1001',
-      type: 'debit',
-      balance: '10000',
-    };
-
     chai
       .request(app)
       .post('/api/v1/transactions/617125781/credit')
-      .send(values)
+      .send(goodTransaction)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
@@ -75,16 +56,10 @@ describe('Credit transaction test suite', () => {
 
   // test validation
   it('should return a create transaction error', (done) => {
-    const values = {
-      cashier: '1001',
-      type: 'debit',
-      balance: '10000',
-    };
-
     chai
       .request(app)
       .post('/api/v1/transactions/61712578144/credit')
-      .send(values)
+      .send(badTransaction)
       .end((err, res) => {
         expect(res.status).to.equal(500);
         expect(res.body.status).to.equal(500);
