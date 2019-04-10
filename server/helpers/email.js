@@ -6,8 +6,8 @@ const transport = {
   port: 465,
   secure: true,
   auth: {
-    user: 'elochi238@gmail.com',
-    pass: 'rosewell',
+    user: process.env.USER,
+    pass: process.env.PASS,
   },
 };
 

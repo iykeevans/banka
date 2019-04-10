@@ -1,10 +1,10 @@
 const addTransaction = require('../models/Transactions');
-const { notification } = require('../helpers/email');
+// const { notification } = require('../helpers/email');
 
 module.exports = async (req, res) => {
   try {
     const transaction = await addTransaction(req.body, req.params);
-    await notification(transaction);
+    // await notification(transaction);
     res.status(201).json({
       status: 201,
       data: transaction,

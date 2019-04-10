@@ -2,7 +2,8 @@ const { addAccount, removeAccount, editStatus } = require('../models/Accounts');
 
 exports.createAccount = async (req, res) => {
   try {
-    const account = await addAccount(req.body);
+    const owner = { owner: req.user.id };
+    const account = await addAccount({ ...owner, ...req.body });
     res.status(201).json({
       status: 201,
       data: account,

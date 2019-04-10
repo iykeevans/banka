@@ -27,7 +27,7 @@ exports.checkAccount = Joi.object().keys({
   id: Joi.number().integer().required(),
   accountNumber: Joi.number().integer().required(),
   createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
-  owner: Joi.number(),
+  owner: Joi.number().required(),
   type: Joi.string().trim().uppercase().valid('savings', 'current')
     .required(),
   status: Joi.string().valid('draft', 'active', 'dormant').default('draft'),
