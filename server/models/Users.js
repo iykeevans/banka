@@ -1,7 +1,7 @@
 const users = require('../utils/dummyUsers');
 const { checkSignup, checkLogin } = require('../helpers/validate');
 
-exports.addUser = user => new Promise((resolve, reject) => {
+const addUser = user => new Promise((resolve, reject) => {
   const id = { id: users.length + 1 };
   checkSignup.validate({ ...id, ...user })
     .then((result) => {
@@ -11,11 +11,18 @@ exports.addUser = user => new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
-exports.loginUser = data => new Promise((resolve, reject) => {
+const findUser = (param) => {
+  const user = users.find(item => item.email === param.email);
+  return user;
+};
+
+const loginUser = data => new Promise((resolve, reject) => {
   checkLogin.validate(data)
     .then((result) => {
-      const user = users.find(item => item.email === result.email);
+      const user = findUser(result);
       resolve(user);
     })
     .catch(error => reject(error));
 });
+
+module.exports = { addUser, findUser, loginUser };
