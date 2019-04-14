@@ -7,7 +7,14 @@ module.exports = async (req, res) => {
     // await notification(transaction);
     res.status(201).json({
       status: 201,
-      data: transaction,
+      data: {
+        transactionId: transaction.id,
+        accountNumber: transaction.accountNumber,
+        amount: transaction.amount,
+        cashier: transaction.cashier,
+        transactionType: transaction.type,
+        accountBalance: transaction.newBalance
+      }
     });
   } catch (error) {
     res.status(500).json({

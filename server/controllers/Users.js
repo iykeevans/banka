@@ -7,14 +7,9 @@ exports.signup = async (req, res) => {
   try {
     const hashPassword = await hash(req.body.password, genSaltSync(10));
     req.body.password = hashPassword;
-    const {
-      id,
-      firstName,
-      lastName,
-      email,
-    } = await addUser(req.body);
+    const user = await addUser(req.body);
 
-    const token = await jwt.sign({ id, email },
+    const token = await jwt.sign({ id: user.id, email: user.email },
       process.env.SECRET,
       { expiresIn: '1h' });
 
@@ -24,10 +19,10 @@ exports.signup = async (req, res) => {
       status: 201,
       data: {
         token,
-        id,
-        firstName,
-        lastName,
-        email,
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
       },
     });
   } catch (error) {

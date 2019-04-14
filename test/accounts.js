@@ -77,8 +77,8 @@ describe('Delete account test suite', () => {
       });
   });
 
-  // test validation
-  it('should return a delete account error', (done) => {
+  // test if account exists
+  it('should return an error if account does not exist', (done) => {
     chai
       .request(app)
       .delete('/api/v1/accounts/6171257144')
@@ -93,7 +93,7 @@ describe('Delete account test suite', () => {
 });
 
 describe('Activate or deactivate account test suite', () => {
-  // delete account test
+  // change account status test
   it('should activate or deactivate an account', (done) => {
     const value = { status: 'active' };
     chai
@@ -111,11 +111,29 @@ describe('Activate or deactivate account test suite', () => {
   });
 
   // test validation
-  it('should return a delete account error', (done) => {
+  it('should return a change status account error', (done) => {
+    const value = { status: ''};
     chai
       .request(app)
-      .patch('/api/v1/accounts/6171257555')
+      .patch('/api/v1/accounts/6171257181')
       .set('authorization', userToken)
+      .send(value)
+      .end((err, res) => {
+        expect(res.status).to.equal(500);
+        expect(res.body.status).to.equal(500);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  // test if account exists
+  it('should return an error if account does not exist', (done) => {
+    const value = { status: 'active'}
+    chai
+      .request(app)
+      .patch('/api/v1/accounts/6171256555')
+      .set('authorization', userToken)
+      .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(500);
         expect(res.body.status).to.equal(500);
