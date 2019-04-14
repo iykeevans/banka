@@ -1,6 +1,6 @@
-const express = require('express');
-const { createAccount, deleteAccount, changeStatus } = require('../controllers/Accounts');
-const verifyToken = require('../middlewares/verifyToken');
+import express from 'express';
+import { createAccount, deleteAccount, changeStatus } from '../controllers/Accounts';
+import verifyToken from '../middlewares/verifyToken';
 
 const router = express.Router();
 
@@ -8,4 +8,4 @@ router.post('/', verifyToken, createAccount);
 router.delete('/:accountNumber', verifyToken, deleteAccount);
 router.patch('/:accountNumber', verifyToken, changeStatus);
 
-module.exports = router;
+export default router;

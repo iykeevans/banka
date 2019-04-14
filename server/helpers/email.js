@@ -1,5 +1,5 @@
-const nodemailer = require('nodemailer');
-const capitalize = require('./capitalize');
+import nodemailer from 'nodemailer';
+import capitalize from './capitalize';
 
 const transport = {
   host: 'smtp.gmail.com',
@@ -11,7 +11,7 @@ const transport = {
   },
 };
 
-exports.signup = async ({ firstName, lastName, email }) => {
+const signup = async ({ firstName, lastName, email }) => {
   const transporter = await nodemailer.createTransport(transport);
 
   const mailOptions = {
@@ -27,7 +27,7 @@ exports.signup = async ({ firstName, lastName, email }) => {
   return transporter.sendMail(mailOptions);
 };
 
-exports.notification = async (transaction) => {
+const notification = async (transaction) => {
   const transporter = await nodemailer.createTransport(transport);
 
   const mailOptions = {
@@ -66,3 +66,5 @@ exports.notification = async (transaction) => {
 
   return transporter.sendMail(mailOptions);
 };
+
+export { signup, notification };

@@ -1,7 +1,7 @@
-const { addAccount, removeAccount, editStatus } = require('../models/Accounts');
-const { findUser } = require('../models/Users');
+import { addAccount, removeAccount, editStatus } from '../models/Accounts';
+import { findUser } from '../models/Users';
 
-exports.createAccount = async (req, res) => {
+export const createAccount = async (req, res) => {
   try {
     const owner = { owner: req.user.id };
     const account = await addAccount({ ...owner, ...req.body });
@@ -26,7 +26,7 @@ exports.createAccount = async (req, res) => {
   }
 };
 
-exports.deleteAccount = async (req, res) => {
+export const deleteAccount = async (req, res) => {
   try {
     await removeAccount(req.params);
     res.json({
@@ -41,7 +41,7 @@ exports.deleteAccount = async (req, res) => {
   }
 };
 
-exports.changeStatus = async (req, res) => {
+export const changeStatus = async (req, res) => {
   try {
     const { accountNumber, status } = await editStatus(req);
     res.json({

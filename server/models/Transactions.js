@@ -1,8 +1,8 @@
-const moment = require('moment');
-const transactions = require('../utils/dummyTransactions');
-const { checkTransaction } = require('../helpers/validate');
+import moment from 'moment';
+import transactions from '../utils/dummyTransactions';
+import { checkTransaction } from '../helpers/validate';
 
-module.exports = (transaction, accountNumber) => new Promise((resolve, reject) => {
+export default (transaction, accountNumber) => new Promise((resolve, reject) => {
   const id = { id: transactions.length + 1 };
   const createdOn = { createdOn: moment().format('MMMM Do YYYY, h:mm:ss a') };
   checkTransaction.validate({

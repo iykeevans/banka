@@ -1,7 +1,8 @@
-const express = require('express');
-const bodyParser = require('body-parser');
-const env = require('dotenv');
-const routes = require('./routes');
+import express from 'express';
+import bodyParser from 'body-parser';
+import '@babel/polyfill';
+import env from 'dotenv';
+import routes from './routes';
 
 env.config();
 

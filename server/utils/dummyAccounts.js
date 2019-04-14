@@ -1,6 +1,6 @@
-const moment = require('moment');
+import moment from 'moment';
 
-module.exports = [
+export default [
   {
     id: 1,
     accountNumber: 6171257181,

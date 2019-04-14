@@ -1,4 +1,4 @@
-module.exports = [
+export default [
   {
     id: 1,
     email: 'dummy@mail.com',
