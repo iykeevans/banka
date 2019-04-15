@@ -10,7 +10,7 @@ module.exports = async (req, res, next) => {
     const result = findUser({ email: decoded.email });
     if (!result) {
       res.status(403).json({
-        statusCode: 403,
+        status: 403,
         error: 'Access is restricted',
       });
     } else {
@@ -19,6 +19,7 @@ module.exports = async (req, res, next) => {
     }
   } catch (error) {
     res.status(500).json({
+      status: 500,
       error: error.message,
     });
   }

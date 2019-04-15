@@ -45,3 +45,9 @@ exports.checkTransaction = Joi.object().keys({
   oldBalance: Joi.number().required(),
   newBalance: Joi.number().required(),
 });
+
+exports.checkStatus = Joi.object().keys({
+  accountNumber: Joi.number().integer().required(),
+  status: Joi.string().trim().lowercase().valid('active', 'dormant')
+    .required()
+});
