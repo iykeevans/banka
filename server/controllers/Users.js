@@ -7,7 +7,7 @@ import { checkSignup, checkLogin } from '../helpers/validate';
 
 export const signup = async (req, res) => {
   try {
-    const id = { id: shortid.generate() }
+    const id = { id: shortid.generate() };
     const result = await checkSignup.validate({ ...id, ...req.body });
     const hashPassword = await hash(result.password, genSaltSync(10));
     result.password = hashPassword;
@@ -39,7 +39,7 @@ export const signup = async (req, res) => {
 
 export const login = async (req, res) => {
   try {
-    const result = await checkLogin.validate(req.body)
+    const result = await checkLogin.validate(req.body);
     const user = await loginUser(result);
 
     if (!user) {

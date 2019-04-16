@@ -1,4 +1,5 @@
 import accounts from '../utils/dummyAccounts';
+import db from './config';
 
 export const addAccount = account => new Promise((resolve) => {
   accounts.push(account);

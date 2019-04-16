@@ -1,0 +1,38 @@
+DROP DATABASE IF EXISTS sendit_testdb;
+CREATE DATABASE sendit_testdb;
+
+\c banka;
+
+CREATE TABLE
+users(
+  id TEXT PRIMARY KEY UNIQUE,
+  email VARCHAR(100) UNIQUE NOT NULL,
+  firstName TEXT NOT NULL,
+  lastName TEXT NOT NULL,
+  password VARCHAR(100) NOT NULL,
+  isAdmin BOOLEAN,
+  createdOn TIMESTAMP DEFAULT LOCALTIMESTAMP(1)
+);
+
+CREATE TABLE
+account(
+  id TEXT PRIMARY KEY UNIQUE,
+  accountNumber INTEGER UNIQUE NOT NULL,
+  owner TEXT NOT NULL,
+  type TEXT NOT NULL,
+  status TEXT NOT NULL,
+  balance FLOAT NOT NULL,
+  createdOn TIMESTAMP DEFAULT LOCALTIMESTAMP(1)
+);
+
+CREATE TABLE
+transaction(
+  id TEXT PRIMARY KEY UNIQUE,
+  type TEXT NOT NULL,
+  accountNumber INTEGER UNIQUE NOT NULL,
+  cashier TEXT UNIQUE NOT NULL,
+  amount INTEGER NOT NULL,
+  oldBalance FLOAT NOT NULL,
+  newBalance FLOAT NOT NULL,
+  createdOn TIMESTAMP DEFAULT LOCALTIMESTAMP(1)
+);
