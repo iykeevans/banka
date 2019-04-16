@@ -1,9 +1,9 @@
-const jwt = require('jsonwebtoken');
-const { findUser } = require('../models/Users');
+import jwt from 'jsonwebtoken';
+import { findUser } from '../models/Users';
 
 // middleware function to check token
 // TODO: WRITE TESTS OR THIS
-module.exports = async (req, res, next) => {
+export default async (req, res, next) => {
   try {
     const token = req.headers.authorization.split(' ')[1];
     const decoded = await jwt.verify(token, process.env.SECRET);

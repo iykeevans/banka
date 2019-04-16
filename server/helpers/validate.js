@@ -1,9 +1,9 @@
-const BaseJoi = require('joi');
-const Extension = require('joi-date-extensions');
+import BaseJoi from 'joi';
+import Extension from 'joi-date-extensions';
 
 const Joi = BaseJoi.extend(Extension);
 
-exports.checkSignup = Joi.object().keys({
+export const checkSignup = Joi.object().keys({
   id: Joi.number().integer().required(),
   email: Joi.string().trim().lowercase().email()
     .required(),
@@ -17,13 +17,13 @@ exports.checkSignup = Joi.object().keys({
   isAdmin: Joi.boolean().default(false),
 });
 
-exports.checkLogin = Joi.object().keys({
+export const checkLogin = Joi.object().keys({
   email: Joi.string().trim().lowercase().email()
     .required(),
   password: Joi.string().trim().required(),
 });
 
-exports.checkAccount = Joi.object().keys({
+export const checkAccount = Joi.object().keys({
   id: Joi.number().integer().required(),
   accountNumber: Joi.number().integer().required(),
   createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
@@ -34,7 +34,7 @@ exports.checkAccount = Joi.object().keys({
   balance: Joi.number().required(),
 });
 
-exports.checkTransaction = Joi.object().keys({
+export const checkTransaction = Joi.object().keys({
   id: Joi.number().integer().required(),
   createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
   type: Joi.string().trim().lowercase().valid('credit', 'debit')
@@ -46,8 +46,8 @@ exports.checkTransaction = Joi.object().keys({
   newBalance: Joi.number().required(),
 });
 
-exports.checkStatus = Joi.object().keys({
+export const checkStatus = Joi.object().keys({
   accountNumber: Joi.number().integer().required(),
   status: Joi.string().trim().lowercase().valid('active', 'dormant')
-    .required()
+    .required(),
 });

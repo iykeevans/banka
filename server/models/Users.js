@@ -1,5 +1,5 @@
-const users = require('../utils/dummyUsers');
-const { checkSignup, checkLogin } = require('../helpers/validate');
+import users from '../utils/dummyUsers';
+import { checkSignup, checkLogin } from '../helpers/validate';
 
 const addUser = user => new Promise((resolve, reject) => {
   const id = { id: users.length + 1 };
@@ -25,4 +25,4 @@ const loginUser = data => new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
-module.exports = { addUser, findUser, loginUser };
+export { addUser, findUser, loginUser };

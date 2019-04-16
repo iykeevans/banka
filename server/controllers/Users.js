@@ -1,9 +1,9 @@
-const { hash, genSaltSync } = require('bcrypt');
-const jwt = require('jsonwebtoken');
-const { addUser, loginUser } = require('../models/Users');
+import { hash, genSaltSync } from 'bcrypt';
+import jwt from 'jsonwebtoken';
+import { addUser, loginUser } from '../models/Users';
 // const { signup } = require('../helpers/email');
 
-exports.signup = async (req, res) => {
+export const signup = async (req, res) => {
   try {
     const hashPassword = await hash(req.body.password, genSaltSync(10));
     req.body.password = hashPassword;
@@ -33,7 +33,7 @@ exports.signup = async (req, res) => {
   }
 };
 
-exports.login = async (req, res) => {
+export const login = async (req, res) => {
   try {
     const user = await loginUser(req.body);
 

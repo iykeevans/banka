@@ -1,7 +1,7 @@
-const express = require('express');
-const user = require('./Users');
-const account = require('./Accounts');
-const transaction = require('./Transactions');
+import express from 'express';
+import user from './Users';
+import account from './Accounts';
+import transaction from './Transactions';
 
 const router = express.Router();
 
@@ -23,4 +23,4 @@ router.use('/api/v1/auth', user);
 router.use('/api/v1/accounts', account);
 router.use('/api/v1/transactions', transaction);
 
-module.exports = router;
+export default router;

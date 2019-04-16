@@ -1,7 +1,7 @@
-const addTransaction = require('../models/Transactions');
-// const { notification } = require('../helpers/email');
+import addTransaction from '../models/Transactions';
+// import { notification } from '../helpers/email';
 
-module.exports = async (req, res) => {
+export default async (req, res) => {
   try {
     const transaction = await addTransaction(req.body, req.params);
     // await notification(transaction);
@@ -13,8 +13,8 @@ module.exports = async (req, res) => {
         amount: transaction.amount,
         cashier: transaction.cashier,
         transactionType: transaction.type,
-        accountBalance: transaction.newBalance
-      }
+        accountBalance: transaction.newBalance,
+      },
     });
   } catch (error) {
     res.status(500).json({

@@ -1,8 +1,8 @@
-const moment = require('moment');
-const accounts = require('../utils/dummyAccounts');
-const { checkAccount, checkStatus } = require('../helpers/validate');
+import moment from 'moment';
+import accounts from '../utils/dummyAccounts';
+import { checkAccount, checkStatus } from '../helpers/validate';
 
-exports.addAccount = account => new Promise((resolve, reject) => {
+const addAccount = account => new Promise((resolve, reject) => {
   const id = { id: accounts.length + 1 };
   const createdOn = { createdOn: moment().format('MMMM Do YYYY, h:mm:ss a') };
   checkAccount.validate({ ...id, ...createdOn, ...account })
@@ -13,7 +13,7 @@ exports.addAccount = account => new Promise((resolve, reject) => {
     .catch(error => reject(error));
 });
 
-exports.removeAccount = ({ accountNumber }) => new Promise((resolve, reject) => {
+const removeAccount = ({ accountNumber }) => new Promise((resolve, reject) => {
   const account = accounts.findIndex(item => item.accountNumber === Number(accountNumber));
   if (account !== -1) {
     const data = accounts[account];
@@ -24,7 +24,7 @@ exports.removeAccount = ({ accountNumber }) => new Promise((resolve, reject) => 
   }
 });
 
-exports.editStatus = ({ params, body }) => new Promise((resolve, reject) => {
+const editStatus = ({ params, body }) => new Promise((resolve, reject) => {
   checkStatus.validate({ ...params, ...body })
     .then((result) => {
       // console.log(result)
@@ -38,5 +38,6 @@ exports.editStatus = ({ params, body }) => new Promise((resolve, reject) => {
       }
     })
     .catch(error => reject(error));
-  
 });
+
+export { addAccount, removeAccount, editStatus };
