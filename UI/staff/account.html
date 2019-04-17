@@ -26,7 +26,7 @@
       <div class="side-nav__links">
         <a href="./control.html" class="side-nav__link">Control center</a>
         <a href="./account.html" class="side-nav__link active">Accounts</a>
-        <a href="./profile.html" class="side-nav__link">Settings</a>
+        <a href="./profile.html" class="side-nav__link">Profile</a>
       </div>
       
     </nav>
@@ -77,7 +77,7 @@
             <td tableHeadData="Date">18-Mar-2019</td>
             <td tableHeadData="Actions">
               <a href="#details">
-                <span data-feather="eye"></span>
+                <span data-feather="more-horizontal"></span>
               </a>
               <a href="#delete">
                 <span data-feather="trash-2"></span>
@@ -91,47 +91,52 @@
 
   <!--Modal starts here-->
 
-  <!--Modal to view dashboard-->
+  <!--Modal to view transaction details-->
   <div class="modal" id="details">
-    <div class="modal__area">
-      <div>
-        <a href="#" style="font-size: 1.3em;">X</a>
-        <div class="flexed spaced mt-1">
+    <div class="modal__area modal__area--half modal__area--padded">
+      <a href="#" class="modal__close">
+        <span data-feather="x-circle"></span>
+      </a>
+      
+      <div class="flexed spaced mt-2">
+        <div>
           <div>
-            <p>Account Number</p>
+            <strong>Account Number</strong>
             <p>3127257181</p>
           </div>
-          <div>
-            <p>Type</p>
-            <p>CREDIT</p>
-          </div>
-        </div>
 
-        <div class="flexed spaced mt-1">
-          <div>
-            <p>Cashier</p>
+          <div class="mt-1">
+            <strong>Cashier</strong>
             <p>1009</p>
           </div>
-          <div>
-            <p>Amount</p>
-            <p>10,000</p>
-          </div>
-        </div>
 
-        <div class="flexed spaced mt-1">
-          <div>
-            <p>Old Balance</p>
+          <div class="mt-1">
+            <strong>Old Balance</strong>
             <p>37,000</p>
           </div>
-          <div>
-            <p>New Balance</p>
-            <p>27,000</p>
+
+          <div class="mt-1">
+            <strong>Date</strong>
+            <p>18-Mar-2019</p>
           </div>
+          
         </div>
 
-        <div class="mt-1">
-          <p>Date</p>
-          <p>18-Mar-2019</p>
+        <div>
+          <div>
+            <strong>Type</strong>
+            <p>CREDIT</p>
+          </div>
+
+          <div class="mt-1">
+            <strong>Amount</strong>
+            <p>10,000</p>
+          </div>
+
+          <div class="mt-1">
+            <strong>New Balance</strong>
+            <p>27,000</p>
+          </div>
         </div>
 
       </div>
@@ -140,10 +145,14 @@
 
   <!--Modal for DELETE-->
   <div class="modal" id="delete">
-    <div class="modal__area">
-      <p>Are You Sure You Want To Delete</p>
-      <button>YES</button>
-      <a href="#NO">NO</a>
+    <div class="modal__area modal__area--padded">
+      <span data-feather="alert-triangle" class="modal__delete"></span>
+      <p class="mt-1">Are You Sure You Want To Delete</p>
+        
+      <div class="flexed spaced mt-1">
+        <button class="modal__button">YES</button>
+        <a href="#" class="modal__link">NO</a>
+      </div>
     </div>
   </div>
 
