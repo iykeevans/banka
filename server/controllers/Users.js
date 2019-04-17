@@ -1,12 +1,9 @@
-import { hash, genSaltSync } from 'bcrypt';
 import jwt from 'jsonwebtoken';
 import { addUser, loginUser } from '../models/Users';
 // const { signup } = require('../helpers/email');
 
 export const signup = async (req, res) => {
   try {
-    const hashPassword = await hash(req.body.password, genSaltSync(10));
-    req.body.password = hashPassword;
     const user = await addUser(req.body);
 
     const token = await jwt.sign({ id: user.id, email: user.email },
