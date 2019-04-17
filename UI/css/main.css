@@ -121,7 +121,7 @@ MODIFIERS
 }
 
 .active {
-	background: #FFFFFF;
+	background: #F5F5F7;
 	color: #313158 !important;
 }
 
@@ -376,7 +376,7 @@ NAVIGATION
 
 .side-nav__link:hover {
 	color: #313158;
-	background: #FFFFFF;
+	background: #F5F5F7;
 }
 
 .mobile-nav {
