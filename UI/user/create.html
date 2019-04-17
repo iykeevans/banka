@@ -29,30 +29,31 @@
     </nav>
 
     <div class="dashboard">
-      <div class="wrapper">
+      <div class="wrapper flexed centered centered--col">
 
-        <div class="dashboard__header flexed spaced"> 
+        <!-- <div class="dashboard__header flexed spaced"> 
           <p class="dashboard__header-title">Create Account</p>
           <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
-        </div>
+        </div> -->
 
-        <form>
-          <div class="form__wrapper flexed spaced">
-            <select name="" id="" class="form__input">
+        <form class="form__container">
+          <h2 class="center">Create Account</h2>
+          <div class="form__wrapper flexed flexed--col spaced">
+            <select name="" id="" class="form__input form__input--wide">
               <option disabled>Account Type</option>
               <option>Savings</option>
               <option>Current</option>
             </select>
-            <input type="email" placeholder="Email" class="form__input">
+            <input type="email" placeholder="Email" class="form__input mt-1 form__input--wide">
           </div>
 
-          <div class="form__wrapper flexed spaced">
-            <input type="text" placeholder="First name" class="form__input">
-            <input type="text" placeholder="Last name" class="form__input">
+          <div class="form__wrapper flexed flexed--col">
+            <input type="text" placeholder="First name" class="form__input form__input--wide">
+            <input type="text" placeholder="Last name" class="form__input mt-1 form__input--wide">
           </div>
 
-          <div class="form__wrapper flexed spaced">
-            <input type="text" placeholder="Opening Balance" class="form__input">
+          <div class="form__wrapper flexed">
+            <input type="text" placeholder="Opening Balance" class="form__input form__input--wide">
           </div>
 
           <button class="form__button secondary--bg">Submit</button>

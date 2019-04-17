@@ -273,16 +273,26 @@ DASHBOARD
 	border: 1px solid #E5E5E5; padding: 0.3em;
 }
 
+.form__container {
+	border: 1px solid #ddd;
+	width: 50%;
+	padding: 2em;
+}
+
 .form__wrapper {
 	margin: 1em 0;
 }
 
 .form__input {
 	font-size: 1.2em;
-	width: 47%;
+	width: 48%;
 	padding: 0.5em 1em;
 	border: 1px solid #E5E5E5;
 	border-radius: 5px;
+}
+
+.form__input--wide {
+	width: 100% !important;
 }
 
 .form__password {
