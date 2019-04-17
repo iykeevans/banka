@@ -32,29 +32,30 @@
     </nav>
 
     <div class="dashboard">
-      <div class="wrapper">
+      <div class="wrapper flexed centered centered--col">
 
-        <div class="dashboard__header flexed spaced"> 
+        <!-- <div class="dashboard__header flexed spaced"> 
           <p class="dashboard__header-title">Create user</p>
           <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
-        </div>
+        </div> -->
 
-        <form>
-          <div class="form__wrapper flexed spaced">
-            <select name="" id="" class="form__input">
+        <form class="form__container">
+          <h2 class="center">Create user</h2>
+          <div class="form__wrapper flexed flexed--col">
+            <select name="" id="" class="form__input form__input--wide">
               <option disabled>Choose Action</option>
               <option>ADMIN</option>
               <option>STAFF</option>
             </select>
-            <input type="text" placeholder="Email" class="form__input">
+            <input type="text" placeholder="Email" class="form__input mt-1 form__input--wide">
           </div>
-          <div class="form__wrapper flexed spaced">
-            <input type="text" placeholder="First name" class="form__input">
-            <input type="text" placeholder="Last name" class="form__input">
+          <div class="form__wrapper flexed flexed--col">
+            <input type="text" placeholder="First name" class="form__input form__input--wide">
+            <input type="text" placeholder="Last name" class="form__input mt-1 form__input--wide">
           </div>
-          <div class="form__wrapper flexed spaced">
-            <input type="text" placeholder="Password" class="form__input">
-            <input type="text" placeholder="Confirm Password" class="form__input">
+          <div class="form__wrapper flexed flexed--col">
+            <input type="text" placeholder="Password" class="form__input form__input--wide">
+            <input type="text" placeholder="Confirm Password" class="form__input mt-1 form__input--wide">
           </div>
 
           <button class="form__button secondary--bg">Submit</button>
