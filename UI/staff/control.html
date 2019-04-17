@@ -31,29 +31,30 @@
     </nav>
 
     <div class="dashboard">
-      <div class="wrapper">
+      <div class="wrapper flexed centered centered--col">
 
-        <div class="dashboard__header flexed spaced"> 
+        <!-- <div class="dashboard__header flexed spaced"> 
           <p class="dashboard__header-title">Control center</p>
           <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
-        </div>
+        </div> -->
 
-        <form>
-          <div class="form__wrapper flexed spaced">
-            <select name="" id="" class="form__input">
+        <form class="form__container">
+          <h2 class="center">Control center</h2>
+          <div class="form__wrapper flexed flexed--col">
+            <select name="" id="" class="form__input form__input--wide">
               <option disabled>Choose Action</option>
               <option>CREDIT</option>
               <option>DEBIT</option>
             </select>
-            <input type="email" placeholder="Transaction ID" class="form__input">
+            <input type="email" placeholder="Transaction ID" class="form__input form__input--wide mt-1">
           </div>
-          <div class="form__wrapper flexed spaced">
-            <input type="email" placeholder="Account Number" class="form__input">
-            <input type="email" placeholder="Cashier" class="form__input">
+          <div class="form__wrapper flexed flexed--col">
+            <input type="email" placeholder="Account Number" class="form__input form__input--wide">
+            <input type="email" placeholder="Cashier" class="form__input form__input--wide mt-1">
           </div>
-          <div class="form__wrapper flexed spaced">
-            <input type="email" placeholder="Amount" class="form__input">
-            <input type="email" placeholder="Account Balance" class="form__input">
+          <div class="form__wrapper flexed flexed--col">
+            <input type="email" placeholder="Amount" class="form__input form__input--wide">
+            <input type="email" placeholder="Account Balance" class="form__input mt-1 form__input--wide">
           </div>
 
           <button class="form__button secondary--bg">Submit</button>
