@@ -1,7 +1,7 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import { goodSignup } from './mockData/user';
+import { goodLogin } from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -9,29 +9,11 @@ chai.use(chaiHttp);
 let userToken;
 
 describe('Create user token', () => {
-  it('should sign up user', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/auth/signup')
-      .send(goodSignup)
-      .end((err, res) => {
-        expect(res.status).to.equal(201);
-        expect(res.body.status).to.equal(201);
-        expect(res.body).to.have.property('data');
-        expect(res.body.data).to.have.property('token');
-        expect(res.body.data).to.be.a('object');
-        done();
-      });
-  });
-
   it('should signin user', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send({
-        email: 'fluxie97@yahoo.com',
-        password: 'hintherland',
-      })
+      .send(goodLogin)
       .end((err, res) => {
         userToken = `Bearer ${res.body.data.token}`;
         expect(res.status).to.equal(200);
@@ -50,7 +32,7 @@ describe('debit transaction test suite', () => {
   it('should create a transaction', (done) => {
     chai
       .request(app)
-      .post('/api/v1/transactions/6171257181/debit')
+      .post('/api/v1/transactions/6171257000/debit')
       .send({ amount: 5000 })
       .set('authorization', userToken)
       .end((err, res) => {
@@ -58,6 +40,22 @@ describe('debit transaction test suite', () => {
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');
         expect(res.body.data).to.be.a('object');
+        expect(res.body.data.transactionType).to.equal('debit');
+        done();
+      });
+  });
+
+  // transaction amount test
+  it('should return a transaction error', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/transactions/6171257000/debit')
+      .send({ amount: 50000 })
+      .set('authorization', userToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
         done();
       });
   });
@@ -66,7 +64,7 @@ describe('debit transaction test suite', () => {
   it('should return a create transaction error', (done) => {
     chai
       .request(app)
-      .post('/api/v1/transactions/6171257181/debit')
+      .post('/api/v1/transactions/6171257000/debit')
       .send({ amount: '' })
       .set('authorization', userToken)
       .end((err, res) => {
@@ -83,7 +81,7 @@ describe('Credit transaction test suite', () => {
   it('should create a transaction', (done) => {
     chai
       .request(app)
-      .post('/api/v1/transactions/6171257181/credit')
+      .post('/api/v1/transactions/6171257000/credit')
       .send({ amount: 5000 })
       .set('authorization', userToken)
       .end((err, res) => {
@@ -91,6 +89,7 @@ describe('Credit transaction test suite', () => {
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');
         expect(res.body.data).to.be.a('object');
+        expect(res.body.data.transactionType).to.equal('credit');
         done();
       });
   });
@@ -99,7 +98,7 @@ describe('Credit transaction test suite', () => {
   it('should return a create transaction error', (done) => {
     chai
       .request(app)
-      .post('/api/v1/transactions/6171257181/credit')
+      .post('/api/v1/transactions/6171257000/credit')
       .send({ amount: '' })
       .set('authorization', userToken)
       .end((err, res) => {

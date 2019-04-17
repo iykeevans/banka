@@ -50,13 +50,9 @@ export default async (req, res) => {
       });
     }
   } catch (error) {
-    if (error.isJoi) {
-      res.status(400).json({
-        status: 400,
-        error: error.details[0].message,
-      });
-    } else {
-      console.log(error);
-    }
+    res.status(400).json({
+      status: 400,
+      error: error.details[0].message,
+    });
   }
 };

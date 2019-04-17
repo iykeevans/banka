@@ -37,13 +37,11 @@ export const createAccount = async (req, res) => {
         status: 400,
         error: error.details[0].message,
       });
-    } else if (error.routine === '_bt_check_unique') {
+    } else {
       res.status(409).json({
         status: 409,
         error: 'account number already exists',
       });
-    } else {
-      console.log(error);
     }
   }
 };
@@ -63,14 +61,10 @@ export const deleteAccount = async (req, res) => {
       });
     }
   } catch (error) {
-    if (error.routine === 'scanint8') {
-      res.status(500).json({
-        status: 500,
-        error: 'accountNumber must be a number',
-      });
-    } else {
-      console.log(error);
-    }
+    res.status(500).json({
+      status: 500,
+      error: 'accountNumber must be a number',
+    });
   }
 };
 
@@ -80,7 +74,7 @@ export const changeStatus = async (req, res) => {
     const account = await findOne({ table: 'accounts', accountnumber: result.accountNumber });
 
     if (account.status === result.status) {
-      res.json({
+      res.status(409).json({
         status: 409,
         error: `status is already defined as ${account.status}`,
       });
@@ -102,7 +96,10 @@ export const changeStatus = async (req, res) => {
         error: error.details[0].message,
       });
     } else {
-      console.log(error);
+      res.status(404).json({
+        status: 404,
+        error: 'Account either doesn\'t exist or has been deleted',
+      });
     }
   }
 };

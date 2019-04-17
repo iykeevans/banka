@@ -1,7 +1,12 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
-import { goodSignup, badSignup, goodLogin, badLogin, invalidLogin } from './mockData/user';
+import {
+  goodSignup, badSignup, goodLogin,
+  badLogin,
+  invalidLogin,
+  invalidLogin2,
+} from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -9,7 +14,7 @@ chai.use(chaiHttp);
 // User sign up test
 describe('User signup test suite', () => {
   // test user sign up
-  it('should return User signup object', (done) => {
+  it('should return User signup success object', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signup')
@@ -25,7 +30,7 @@ describe('User signup test suite', () => {
   });
 
   // test validation
-  it('should return a user signup error', (done) => {
+  it('should return a user validation error', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signup')
@@ -33,6 +38,20 @@ describe('User signup test suite', () => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  // test if email already exists
+  it('should return a user conflict error', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(goodSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(409);
+        expect(res.body.status).to.equal(409);
         expect(res.body).to.have.property('error');
         done();
       });
@@ -46,10 +65,7 @@ describe('User login test suite', () => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send({
-        email: 'fluxie97@yahoo.com',
-        password: 'hintherland',
-      })
+      .send(goodLogin)
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);
@@ -90,11 +106,10 @@ describe('User login test suite', () => {
 
   // test if user exists but wrong password
   it('should return a User auth error', (done) => {
-    goodLogin.password = 'felony';
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send(goodLogin)
+      .send(invalidLogin2)
       .end((err, res) => {
         expect(res.status).to.equal(401);
         expect(res.body.status).to.equal(401);

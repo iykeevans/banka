@@ -1,5 +1,5 @@
-DROP DATABASE IF EXISTS sendit_testdb;
-CREATE DATABASE sendit_testdb;
+DROP DATABASE IF EXISTS banka;
+CREATE DATABASE banka;
 
 \c banka;
 

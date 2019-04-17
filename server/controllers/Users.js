@@ -38,15 +38,10 @@ export const signup = async (req, res) => {
         status: 400,
         error: error.details[0].message,
       });
-    } else if (error.routine === '_bt_check_unique') {
+    } else {
       res.status(409).json({
         status: 409,
         error: 'Email already exist',
-      });
-    } else {
-      res.status(500).json({
-        status: 500,
-        error: error.message,
       });
     }
   }
@@ -57,12 +52,7 @@ export const login = async (req, res) => {
     const result = await checkLogin.validate(req.body);
     const user = await findOne({ ...{ table: 'users' }, ...result });
 
-    if (!user) {
-      res.status(401).json({
-        status: 401,
-        error: 'The credentials you provided are invalid',
-      });
-    } else if (user && !compareSync(result.password, user.password)) {
+    if (user && !compareSync(result.password, user.password)) {
       res.status(401).json({
         status: 401,
         error: 'The credentials you provided are invalid',
@@ -84,9 +74,16 @@ export const login = async (req, res) => {
       });
     }
   } catch (error) {
-    res.status(400).json({
-      status: 400,
-      error: error.details[0].message,
-    });
+    if (error.isJoi) {
+      res.status(400).json({
+        status: 400,
+        error: error.details[0].message,
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        error: 'The credentials you provided are invalid',
+      });
+    }
   }
 };
