@@ -169,3 +169,32 @@ describe('User login test suite', () => {
       });
   });
 });
+
+describe('GET all user accounts', () => {
+  // test login
+  it('should return all user accounts', (done) => {
+    chai
+      .request(app)
+      .get(`/api/v1/user/${clientLogin.email}/accounts`)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.be.an('array');
+        done();
+      });
+  });
+
+  // test for email that doesn't exist
+  it('should return a user accounts error', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/user/--------lllkkkkk/accounts')
+      .end((err, res) => {
+        expect(res.status).to.equal(500);
+        expect(res.body.status).to.equal(500);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
