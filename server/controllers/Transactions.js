@@ -11,9 +11,13 @@ export default async (req, res) => {
     const result = await checkTransaction.validate({
       ...id,
       ...createdOn,
-      ...req.body,
       ...req.params,
-    })
+      newBalance: req.Balance.newBalance,
+      type: req.transaction,
+      amount: req.body.amount,
+      cashier: req.user.id,
+      oldBalance: req.Balance.balance,
+    });
     const transaction = await addTransaction(result);
     // await notification(transaction);
     res.status(201).json({

@@ -49,7 +49,7 @@ export const deleteAccount = async (req, res) => {
 
 export const changeStatus = async (req, res) => {
   try {
-    const result = await checkStatus.validate({ ...req.params, ...req.body })
+    const result = await checkStatus.validate({ ...req.params, ...req.body });
     const { accountNumber, status } = await editStatus(result);
     res.json({
       status: 200,
