@@ -1,8 +1,8 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../server');
-const { goodAccount, badAccount } = require('./mockData/accounts');
-const { goodLogin } = require('./mockData/user');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../server';
+import { goodAccount, badAccount } from './mockData/accounts';
+import { goodLogin, goodSignup } from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -10,11 +10,29 @@ chai.use(chaiHttp);
 let userToken;
 
 describe('Create user token', () => {
-  it('should create a user token', (done) => {
+  it('should sign up user', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(goodSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body.status).to.equal(201);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  it('should signin user', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send(goodLogin)
+      .send({
+        email: 'fluxie97@yahoo.com',
+        password: 'hintherland'
+      })
       .end((err, res) => {
         userToken = `Bearer ${res.body.data.token}`;
         expect(res.status).to.equal(200);
@@ -53,8 +71,8 @@ describe('Create account test suite', () => {
       .set('authorization', userToken)
       .send(badAccount)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.have.property('error');
         done();
       });
@@ -84,8 +102,8 @@ describe('Delete account test suite', () => {
       .delete('/api/v1/accounts/6171257144')
       .set('authorization', userToken)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(404);
+        expect(res.body.status).to.equal(404);
         expect(res.body).to.have.property('error');
         done();
       });

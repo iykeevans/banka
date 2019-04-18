@@ -1,18 +1,8 @@
-import { hash, genSaltSync } from 'bcrypt';
 import users from '../utils/dummyUsers';
-import { checkSignup, checkLogin } from '../helpers/validate';
 
-const addUser = user => new Promise(async (resolve, reject) => {
-  try {
-    const id = { id: users.length + 1 };
-    const result = await checkSignup.validate({ ...id, ...user });
-    const hashPassword = await hash(result.password, genSaltSync(10));
-    result.password = hashPassword;
-    users.push(result);
-    resolve(result);
-  } catch (error) {
-    reject(error);
-  }
+const addUser = user => new Promise((resolve) => {
+  users.push(user);
+  resolve(user);
 });
 
 const findUser = (param) => {
@@ -20,13 +10,9 @@ const findUser = (param) => {
   return user;
 };
 
-const loginUser = data => new Promise((resolve, reject) => {
-  checkLogin.validate(data)
-    .then((result) => {
-      const user = findUser(result);
-      resolve(user);
-    })
-    .catch(error => reject(error));
+const loginUser = data => new Promise((resolve) => {
+  const user = findUser(data);
+  resolve(user);
 });
 
 export { addUser, findUser, loginUser };
