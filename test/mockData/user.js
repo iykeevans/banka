@@ -1,4 +1,4 @@
-exports.goodSignup = {
+export const goodSignup = {
   email: 'fluxie97@yahoo.com',
   firstName: 'chisom',
   lastName: 'ezeani',
@@ -6,7 +6,7 @@ exports.goodSignup = {
   type: 'client',
 };
 
-exports.badSignup = {
+export const badSignup = {
   email: 'fluxie97@yahoo.com',
   firstName: 'chisom',
   lastName: 'ezeani',
@@ -14,17 +14,17 @@ exports.badSignup = {
   type: 'savings',
 };
 
-exports.goodLogin = {
+export const goodLogin = {
   email: 'dummy@mail.com',
   password: 'zigblayu',
 };
 
-exports.badLogin = {
+export const badLogin = {
   email: 'dummymail.com',
   password: 'zigblayu',
 };
 
-exports.invalidLogin = {
+export const invalidLogin = {
   email: 'dum@mail.com',
   password: 'zigblayu',
 };

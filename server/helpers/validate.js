@@ -4,7 +4,7 @@ import Extension from 'joi-date-extensions';
 const Joi = BaseJoi.extend(Extension);
 
 export const checkSignup = Joi.object().keys({
-  id: Joi.number().integer().required(),
+  id: Joi.string().required(),
   email: Joi.string().trim().lowercase().email()
     .required(),
   firstName: Joi.string().trim().lowercase().min(3)
@@ -24,10 +24,10 @@ export const checkLogin = Joi.object().keys({
 });
 
 export const checkAccount = Joi.object().keys({
-  id: Joi.number().integer().required(),
+  id: Joi.string().required(),
   accountNumber: Joi.number().integer().required(),
   createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
-  owner: Joi.number().required(),
+  owner: Joi.string().required(),
   type: Joi.string().trim().uppercase().valid('savings', 'current')
     .required(),
   status: Joi.string().valid('draft', 'active', 'dormant').default('draft'),
@@ -35,7 +35,7 @@ export const checkAccount = Joi.object().keys({
 });
 
 export const checkTransaction = Joi.object().keys({
-  id: Joi.number().integer().required(),
+  id: Joi.string().required(),
   createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
   type: Joi.string().trim().lowercase().valid('credit', 'debit')
     .required(),

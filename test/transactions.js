@@ -1,29 +1,51 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../server');
-const { goodTransaction, badTransaction } = require('./mockData/transactions');
-const { goodLogin } = require('./mockData/user');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../server';
+import { goodTransaction, badTransaction } from './mockData/transactions';
+import { goodLogin, goodSignup } from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
 let userToken;
 
-before('Create user token', (done) => {
-  chai
-    .request(app)
-    .post('/api/v1/auth/signin')
-    .send(goodLogin)
-    .end((err, res) => {
-      userToken = `Bearer ${res.body.data.token}`;
-      expect(res.status).to.equal(200);
-      expect(res.body.status).to.equal(200);
-      expect(res.body).to.have.property('data');
-      expect(res.body.data).to.have.property('token');
-      expect(res.body.data).to.be.a('object');
-      done();
-    });
+describe('Create user token', () => {
+  it('should sign up user', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(goodSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body.status).to.equal(201);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  it('should signin user', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send({
+        email: 'fluxie97@yahoo.com',
+        password: 'hintherland'
+      })
+      .end((err, res) => {
+        userToken = `Bearer ${res.body.data.token}`;
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
 });
+
+
 
 // Transaction test
 describe('debit transaction test suite', () => {
@@ -51,8 +73,8 @@ describe('debit transaction test suite', () => {
       .send(badTransaction)
       .set('authorization', userToken)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.have.property('error');
         done();
       });
@@ -84,8 +106,8 @@ describe('Credit transaction test suite', () => {
       .send(badTransaction)
       .set('authorization', userToken)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.have.property('error');
         done();
       });

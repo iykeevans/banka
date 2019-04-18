@@ -1,14 +1,8 @@
 import users from '../utils/dummyUsers';
-import { checkSignup, checkLogin } from '../helpers/validate';
 
-const addUser = user => new Promise((resolve, reject) => {
-  const id = { id: users.length + 1 };
-  checkSignup.validate({ ...id, ...user })
-    .then((result) => {
-      users.push(result);
-      resolve(result);
-    })
-    .catch(error => reject(error));
+const addUser = user => new Promise((resolve) => {
+  users.push(user);
+  resolve(user);
 });
 
 const findUser = (param) => {
@@ -16,13 +10,9 @@ const findUser = (param) => {
   return user;
 };
 
-const loginUser = data => new Promise((resolve, reject) => {
-  checkLogin.validate(data)
-    .then((result) => {
-      const user = findUser(result);
-      resolve(user);
-    })
-    .catch(error => reject(error));
+const loginUser = data => new Promise((resolve) => {
+  const user = findUser(data);
+  resolve(user);
 });
 
 export { addUser, findUser, loginUser };
