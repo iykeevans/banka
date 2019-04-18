@@ -1,7 +1,7 @@
-const chai = require('chai');
-const chaiHttp = require('chai-http');
-const app = require('../server');
-const { goodSignup, badSignup, goodLogin, badLogin, invalidLogin } = require('./mockData/user');
+import chai from 'chai';
+import chaiHttp from 'chai-http';
+import app from '../server';
+import { goodSignup, badSignup, goodLogin, badLogin, invalidLogin } from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -31,8 +31,8 @@ describe('User signup test suite', () => {
       .post('/api/v1/auth/signup')
       .send(badSignup)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.have.property('error');
         done();
       });
@@ -46,7 +46,10 @@ describe('User login test suite', () => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send(goodLogin)
+      .send({
+        email: 'fluxie97@yahoo.com',
+        password: 'hintherland',
+      })
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);
@@ -58,14 +61,14 @@ describe('User login test suite', () => {
   });
 
   // test validation
-  it('should return a User login error', (done) => {
+  it('should return a User validation error', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
       .send(badLogin)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
         expect(res.body).to.have.property('error');
         done();
       });
@@ -78,8 +81,23 @@ describe('User login test suite', () => {
       .post('/api/v1/auth/signin')
       .send(invalidLogin)
       .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
+        expect(res.status).to.equal(401);
+        expect(res.body.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  // test if user exists but wrong password
+  it('should return a User auth error', (done) => {
+    goodLogin.password = 'felony';
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(goodLogin)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body.status).to.equal(401);
         expect(res.body).to.have.property('error');
         done();
       });

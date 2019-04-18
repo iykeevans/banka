@@ -1,4 +1,4 @@
-exports.goodTransaction = {
+export const goodTransaction = {
   amount: 5000,
   cashier: 1001,
   type: 'debit',
@@ -6,7 +6,7 @@ exports.goodTransaction = {
   newBalance: 5000,
 };
 
-exports.badTransaction = {
+export const badTransaction = {
   cashier: 1001,
   type: 'debit',
   oldBalance: 10000,

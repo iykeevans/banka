@@ -1,9 +1,20 @@
+import moment from 'moment';
+import shortid from 'shortid';
 import addTransaction from '../models/Transactions';
+import { checkTransaction } from '../helpers/validate';
 // import { notification } from '../helpers/email';
 
 export default async (req, res) => {
   try {
-    const transaction = await addTransaction(req.body, req.params);
+    const id = { id: shortid.generate() };
+    const createdOn = { createdOn: moment().format('MMMM Do YYYY, h:mm:ss a') };
+    const result = await checkTransaction.validate({
+      ...id,
+      ...createdOn,
+      ...req.body,
+      ...req.params,
+    })
+    const transaction = await addTransaction(result);
     // await notification(transaction);
     res.status(201).json({
       status: 201,
@@ -17,9 +28,9 @@ export default async (req, res) => {
       },
     });
   } catch (error) {
-    res.status(500).json({
-      status: 500,
-      error: error.message,
+    res.status(400).json({
+      status: 400,
+      error: error.details[0].message,
     });
   }
 };
