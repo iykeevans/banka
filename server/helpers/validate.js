@@ -40,7 +40,7 @@ export const checkTransaction = Joi.object().keys({
   createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
   type: Joi.string().trim().lowercase().valid('credit', 'debit')
     .required(),
-  accountNumber: Joi.number().integer().required(),
+  accountNumber: Joi.number().required(),
   cashier: Joi.string().required(),
   amount: Joi.number().required(),
   oldBalance: Joi.number().required(),
