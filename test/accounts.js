@@ -2,21 +2,40 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import { goodAccount, goodAccount2, badAccount } from './mockData/accounts';
-import { goodLogin } from './mockData/user';
+import { clientLogin, staffLogin } from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
-let userToken;
+let clientToken;
+let staffToken;
 
 describe('Create user token', () => {
-  it('should signin user', (done) => {
+  // Login client test
+  it('should signin client', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send(goodLogin)
+      .send(clientLogin)
       .end((err, res) => {
-        userToken = `Bearer ${res.body.data.token}`;
+        clientToken = `Bearer ${res.body.data.token}`;
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  // Login client test
+  it('should signin staff', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(staffLogin)
+      .end((err, res) => {
+        staffToken = `Bearer ${res.body.data.token}`;
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);
         expect(res.body).to.have.property('data');
@@ -34,7 +53,7 @@ describe('Create account test suite', () => {
     chai
       .request(app)
       .post('/api/v1/accounts')
-      .set('authorization', userToken)
+      .set('authorization', clientToken)
       .send(goodAccount)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -50,7 +69,7 @@ describe('Create account test suite', () => {
     chai
       .request(app)
       .post('/api/v1/accounts')
-      .set('authorization', userToken)
+      .set('authorization', clientToken)
       .send(goodAccount)
       .end((err, res) => {
         expect(res.status).to.equal(409);
@@ -65,7 +84,7 @@ describe('Create account test suite', () => {
     chai
       .request(app)
       .post('/api/v1/accounts')
-      .set('authorization', userToken)
+      .set('authorization', clientToken)
       .send(badAccount)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -82,7 +101,7 @@ describe('Delete account test suite', () => {
     chai
       .request(app)
       .post('/api/v1/accounts')
-      .set('authorization', userToken)
+      .set('authorization', clientToken)
       .send(goodAccount2)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -93,12 +112,26 @@ describe('Delete account test suite', () => {
       });
   });
 
+  // delete account error test
+  it('should return a delete account error', (done) => {
+    chai
+      .request(app)
+      .delete('/api/v1/accounts/7413162900')
+      .set('authorization', clientToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
   // delete account test
   it('should delete an account', (done) => {
     chai
       .request(app)
       .delete('/api/v1/accounts/7413162900')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);
@@ -113,7 +146,7 @@ describe('Delete account test suite', () => {
     chai
       .request(app)
       .delete('/api/v1/accounts/6171257144')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body.status).to.equal(404);
@@ -128,7 +161,7 @@ describe('Delete account test suite', () => {
     chai
       .request(app)
       .delete('/api/v1/accounts/------kkklll')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(500);
@@ -146,7 +179,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch('/api/v1/accounts/6171257000')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -157,13 +190,29 @@ describe('Activate or deactivate account test suite', () => {
       });
   });
 
+  // change account status test
+  it('should return an activate or deactivate an account error', (done) => {
+    const value = { status: 'active' };
+    chai
+      .request(app)
+      .patch('/api/v1/accounts/6171257000')
+      .set('authorization', clientToken)
+      .send(value)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
   // test validation
   it('should return a change status account validation error', (done) => {
     const value = { status: '' };
     chai
       .request(app)
       .patch('/api/v1/accounts/6171257000')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -179,7 +228,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch('/api/v1/accounts/6171256555')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(404);
@@ -195,7 +244,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch('/api/v1/accounts/6171257000')
-      .set('authorization', userToken)
+      .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(409);

@@ -14,24 +14,31 @@ export const signup = async (req, res) => {
     const result = await checkSignup.validate({ ...id, ...req.body, ...createdOn });
     const hashPassword = await hash(result.password, genSaltSync(10));
     result.password = hashPassword;
-    const user = await save([userQuery, result]);
 
-    const token = await jwt.sign({ id: user.id, email: user.email },
-      process.env.SECRET,
-      { expiresIn: '1h' });
+    if (result.isAdmin && result.type === 'client') {
+      res.status(400).json({
+        status: 400,
+        error: 'Admin cannot be a client',
+      });
+    } else {
+      const user = await save([userQuery, result]);
+      const token = await jwt.sign({ id: user.id, email: user.email },
+        process.env.SECRET,
+        { expiresIn: '1h' });
 
-    // await signup({ firstName, lastName, email });
+      // await signup({ firstName, lastName, email });
 
-    res.status(201).json({
-      status: 201,
-      data: {
-        token,
-        id: user.id,
-        firstName: user.firstname,
-        lastName: user.lastname,
-        email: user.email,
-      },
-    });
+      res.status(201).json({
+        status: 201,
+        data: {
+          token,
+          id: user.id,
+          firstName: user.firstname,
+          lastName: user.lastname,
+          email: user.email,
+        },
+      });
+    }
   } catch (error) {
     if (error.isJoi) {
       res.status(400).json({
@@ -50,7 +57,7 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const result = await checkLogin.validate(req.body);
-    const user = await findOne({ ...{ table: 'users' }, ...result });
+    const user = await findOne({ table: 'users', email: result.email });
 
     if (user && !compareSync(result.password, user.password)) {
       res.status(401).json({
@@ -58,7 +65,7 @@ export const login = async (req, res) => {
         error: 'The credentials you provided are invalid',
       });
     } else {
-      const token = await jwt.sign({ id: user.id, email: user.email },
+      const token = await jwt.sign({ id: user.id, isAdmin: user.is_admin },
         process.env.SECRET,
         { expiresIn: '1h' });
 

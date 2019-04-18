@@ -7,7 +7,7 @@
     "clean": "rm -rf bundle",
     "build-babel": "babel -d ./bundle ./server -s",
     "build": "npm run clean && npm run build-babel",
-    "test": "cross-env NODE_ENV=Test npm run migrate && nyc mocha test/index.js --exit --require @babel/register --timeout 25000",
+    "test": "cross-env NODE_ENV=Test npm run migrate && cross-env NODE_ENV=Test nyc mocha test/index.js --exit --require @babel/register --timeout 25000",
     "dev": "cross-env NODE_ENV=Development nodemon --exec babel-node server",
     "start": "npm run build && node bundle",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
