@@ -38,6 +38,12 @@ const transaction = {
   createdOn: moment(new Date()),
 };
 
+/**
+ * @function seed
+ * @description function to SEED DATABASE.
+ * @param {object} data - table to search in with data
+ * @returns {object} QUERY RESPONSE IN JSON FORMAT
+ */
 const seed = async () => {
   try {
     await db.one(userQuery, user);

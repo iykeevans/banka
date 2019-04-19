@@ -1,8 +1,16 @@
 import jwt from 'jsonwebtoken';
 import { findOne } from '../../models';
 
-// middleware function to check token
 // TODO: WRITE TESTS OR THIS
+/**
+ * @function verifyToken
+ * @description function to AUTHENTICATE USER.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @param {object} next - goes to the next task
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports verifyToken
+ */
 export default async (req, res, next) => {
   try {
     if (!req.headers.authorization) {

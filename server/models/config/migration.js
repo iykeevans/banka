@@ -43,6 +43,11 @@ CREATE TABLE transactions (
 );
 `;
 
+/**
+ * @function connect
+ * @description function to ADD TABLES TO DATABASE.
+ * @returns {object} QUERY RESPONSE IN JSON FORMAT
+ */
 const connect = async () => {
   try {
     const result = await db.result(migration);
