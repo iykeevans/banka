@@ -8,7 +8,11 @@ export const findOne = (data) => {
 };
 
 export const find = (data) => {
-  const [table, key] = Object.keys(data);
+  const params = Object.keys(data);
+  const [table, key] = params;
+  if (params.length < 2) {
+    return db.any(`SELECT * FROM ${data[table]}`);
+  }
   return db.any(`SELECT * FROM ${data[table]} WHERE ${key} = $1`, data[key]);
 };
 

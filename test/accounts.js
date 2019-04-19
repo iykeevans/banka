@@ -285,3 +285,34 @@ describe('GET specific account', () => {
       });
   });
 });
+
+describe('GET all accounts', () => {
+  // get all accounts test as staff
+  it('should return all accounts', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/accounts')
+      .set('authorization', staffToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.be.an('array');
+        done();
+      });
+  });
+
+  // get all accounts test as staff
+  it('should return all accounts', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/accounts')
+      .set('authorization', clientToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
