@@ -302,8 +302,8 @@ describe('GET all accounts', () => {
       });
   });
 
-  // get all accounts test as staff
-  it('should return all accounts', (done) => {
+  // get all accounts test as client
+  it('should return a user type error', (done) => {
     chai
       .request(app)
       .get('/api/v1/accounts')
@@ -311,6 +311,51 @@ describe('GET all accounts', () => {
       .end((err, res) => {
         expect(res.status).to.equal(401);
         expect(res.body.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
+
+describe('GET all accounts with status of active', () => {
+  // get all accounts test as staff
+  it('should return all accounts', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/accounts/account/account?status=active')
+      .set('authorization', staffToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.be.an('array');
+        done();
+      });
+  });
+
+  // get all accounts test as client
+  it('should return all accounts', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/accounts/account/account?status=active')
+      .set('authorization', clientToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(401);
+        expect(res.body.status).to.equal(401);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  // test if no account with requested status
+  it('should return all accounts', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/accounts/account/account?status=dormant')
+      .set('authorization', staffToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(404);
+        expect(res.body.status).to.equal(404);
         expect(res.body).to.have.property('error');
         done();
       });

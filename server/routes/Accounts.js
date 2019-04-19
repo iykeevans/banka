@@ -1,7 +1,7 @@
 import express from 'express';
 import {
   createAccount, deleteAccount, changeStatus,
-  getHistory, getAccount, getAccounts,
+  getHistory, getAccount, getAccounts, getByStatus,
 } from '../controllers/Accounts';
 import verifyToken from '../middlewares/authentication/verifyToken';
 import isStaff from '../middlewares/authentication/staffAuth';
@@ -14,5 +14,7 @@ router.get('/:accountNumber/transactions', verifyToken, getHistory);
 router.post('/', verifyToken, createAccount);
 router.delete('/:accountNumber', verifyToken, isStaff, deleteAccount);
 router.patch('/:accountNumber', verifyToken, isStaff, changeStatus);
+// TODO: work on this
+router.get('/account/account', verifyToken, isStaff, getByStatus);
 
 export default router;

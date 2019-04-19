@@ -156,3 +156,19 @@ export const getAccounts = async (req, res) => {
     });
   }
 };
+
+export const getByStatus = async (req, res) => {
+  const { status } = req.query;
+  const accounts = await find({ table: 'accounts', status });
+  if (accounts.length) {
+    res.json({
+      status: 200,
+      data: accounts,
+    });
+  } else {
+    res.status(404).json({
+      status: 404,
+      error: `No accounts with status ${status}`,
+    });
+  }
+};
