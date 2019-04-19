@@ -7,11 +7,12 @@ import routes from './routes';
 env.config();
 
 const app = express();
+const port = process.env.PORT || 3000;
 
 app.use(bodyParser.json());
 
 app.use(routes);
 
-app.listen(3000, () => console.log('now listening to port 3000'));
+app.listen(port, () => console.log(`now listening to port ${port}`));
 
 module.exports = app;
