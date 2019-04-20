@@ -15,6 +15,7 @@ export const checkSignup = Joi.object().keys({
   type: Joi.string().trim().lowercase().valid('client', 'staff')
     .required(),
   isAdmin: Joi.boolean().default(false),
+  createdOn: Joi.date().format('MMMM Do YYYY, h:mm:ss a').required(),
 });
 
 export const checkLogin = Joi.object().keys({
