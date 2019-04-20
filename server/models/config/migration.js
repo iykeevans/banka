@@ -9,6 +9,7 @@ CREATE TABLE users (
   firstname TEXT NOT NULL,
   lastname TEXT NOT NULL,
   password varchar(100) NOT NULL,
+  type TEXT NOT NULL,
   is_admin BOOLEAN DEFAULT FALSE,
   createdOn TIMESTAMP NOT NULL,
   PRIMARY KEY (id)
@@ -18,7 +19,7 @@ CREATE TABLE users (
 DROP TABLE IF EXISTS accounts CASCADE;
 CREATE TABLE accounts (
   id TEXT UNIQUE,
-  accountNumber INTEGER UNIQUE NOT NULL,
+  accountNumber BIGINT UNIQUE NOT NULL,
   owner TEXT REFERENCES users(id) NOT NULL,
   type TEXT NOT NULL,
   status TEXT NOT NULL,
@@ -32,7 +33,7 @@ DROP TABLE IF EXISTS transactions CASCADE;
 CREATE TABLE transactions (
   id TEXT UNIQUE,
   type TEXT NOT NULL,
-  accountNumber INTEGER UNIQUE NOT NULL,
+  accountNumber BIGINT NOT NULL,
   cashier TEXT REFERENCES users(id) NOT NULL,
   amount INTEGER NOT NULL,
   oldBalance FLOAT NOT NULL,

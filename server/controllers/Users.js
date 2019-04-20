@@ -1,17 +1,20 @@
 import jwt from 'jsonwebtoken';
 import { hash, genSaltSync, compareSync } from 'bcrypt';
 import shortid from 'shortid';
-import { addUser, loginUser } from '../models/Users';
+import moment from 'moment';
+import { save, findOne } from '../models';
+import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin } from '../helpers/validate';
 // const { signup } = require('../helpers/email');
 
 export const signup = async (req, res) => {
   try {
     const id = { id: shortid.generate() };
-    const result = await checkSignup.validate({ ...id, ...req.body });
+    const createdOn = { createdOn: moment(new Date()) };
+    const result = await checkSignup.validate({ ...id, ...req.body, ...createdOn });
     const hashPassword = await hash(result.password, genSaltSync(10));
     result.password = hashPassword;
-    const user = await addUser(result);
+    const user = await save([userQuery, result]);
 
     const token = await jwt.sign({ id: user.id, email: user.email },
       process.env.SECRET,
@@ -24,23 +27,35 @@ export const signup = async (req, res) => {
       data: {
         token,
         id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
+        firstName: user.firstname,
+        lastName: user.lastname,
         email: user.email,
       },
     });
   } catch (error) {
-    res.status(400).json({
-      status: 400,
-      error: error.details[0].message,
-    });
+    if (error.isJoi) {
+      res.status(400).json({
+        status: 400,
+        error: error.details[0].message,
+      });
+    } else if (error.routine === '_bt_check_unique') {
+      res.status(409).json({
+        status: 409,
+        error: 'Email already exist',
+      });
+    } else {
+      res.status(500).json({
+        status: 500,
+        error: error.message,
+      });
+    }
   }
 };
 
 export const login = async (req, res) => {
   try {
     const result = await checkLogin.validate(req.body);
-    const user = await loginUser(result);
+    const user = await findOne({ ...{ table: 'users' }, ...result });
 
     if (!user) {
       res.status(401).json({
@@ -62,8 +77,8 @@ export const login = async (req, res) => {
         data: {
           token,
           id: user.id,
-          firstName: user.firstName,
-          lastName: user.lastName,
+          firstName: user.firstname,
+          lastName: user.lastname,
           email: user.email,
         },
       });

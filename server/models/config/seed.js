@@ -1,35 +1,52 @@
 import ngfaker from 'ng-faker';
+import moment from 'moment';
 import shortid from 'shortid';
 import db from '.';
-import moment from 'moment';
+import { accountQuery, transactionQuery, userQuery } from './query';
 
 const id = shortid.generate();
 
+const user = {
+  id,
+  email: `${ngfaker.name.firstName()}@gmail.com`,
+  firstName: ngfaker.name.firstName(),
+  lastName: ngfaker.name.lastName(),
+  password: shortid.generate(),
+  type: 'client',
+  isAdmin: false,
+  createdOn: moment(new Date()),
+};
+
+const account = {
+  id: shortid.generate(),
+  accountNumber: ngfaker.account.accountNumber(),
+  owner: id,
+  type: 'savings',
+  status: 'active',
+  balance: Math.random() * 10000,
+  createdOn: moment(new Date()),
+};
+
+const transaction = {
+  id: shortid.generate(),
+  accountNumber: ngfaker.account.accountNumber(),
+  cashier: id,
+  type: 'debit',
+  amount: Math.random() * 10000,
+  oldBalance: Math.random() * 10000,
+  newBalance: Math.random() * 10000,
+  createdOn: moment(new Date()),
+};
+
 const seed = async () => {
-  const userquery = `INSERT INTO
-    users(id, email, firstname, lastname, password, is_admin, createdOn)
-    VALUES($<id>, $<email>, $<firstname>, $<lastname>, $<password>, $<is_admin>, $<createdOn>)`;
-
-  const user = {
-    id,
-    email: ngfaker.name.email(),
-    firstname: ngfaker.name.email(),
-    lastname: ngfaker.name.email(),
-    password: ngfaker.name.email(),
-    createdOn: moment().format('MMMM Do YYYY, h:mm:ss a'),
-  };
-
   try {
-    await db.none(userquery, user);
-    // await db.none()
-    // await db.none()
+    await db.one(userQuery, user);
+    await db.one(accountQuery, account);
+    await db.one(transactionQuery, transaction);
+    console.log('*****seeding successful*****');
   } catch (error) {
     console.log(error.message);
   }
 };
 
-for (let i = 0; i < 3; i = +1) {
-  seed();
-}
-
-// console.log(ngfaker.name.firstName())
+seed();
