@@ -17,7 +17,7 @@ switch (process.env.NODE_ENV) {
 }
 
 const pgp = pgpromise();
-console.log('============>', connectionString, process.env.NODE_ENV);
+console.log('******* Currently in', process.env.NODE_ENV, 'Enviroment ********');
 
 const db = pgp(connectionString);
 

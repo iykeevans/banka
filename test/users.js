@@ -2,7 +2,12 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import {
-  goodSignup, badSignup, goodLogin,
+  clientSignup,
+  clientLogin,
+  staffSignup,
+  adminSignup,
+  badAdminSignup,
+  badSignup,
   badLogin,
   invalidLogin,
   invalidLogin2,
@@ -13,18 +18,64 @@ chai.use(chaiHttp);
 
 // User sign up test
 describe('User signup test suite', () => {
-  // test user sign up
-  it('should return User signup success object', (done) => {
+  // test user (client) sign up
+  it('should signup a client successfully', (done) => {
     chai
       .request(app)
       .post('/api/v1/auth/signup')
-      .send(goodSignup)
+      .send(clientSignup)
       .end((err, res) => {
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');
         expect(res.body.data).to.have.property('token');
         expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  // test user (staff) sign up
+  it('should signup a staff successfully', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(staffSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body.status).to.equal(201);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  // test user (admin) sign up
+  it('should signup an admin successfully', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(adminSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(201);
+        expect(res.body.status).to.equal(201);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  // test user (admin) bad sign up
+  it('should return an admin signup error', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(badAdminSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
         done();
       });
   });
@@ -48,7 +99,7 @@ describe('User signup test suite', () => {
     chai
       .request(app)
       .post('/api/v1/auth/signup')
-      .send(goodSignup)
+      .send(clientSignup)
       .end((err, res) => {
         expect(res.status).to.equal(409);
         expect(res.body.status).to.equal(409);
@@ -65,7 +116,7 @@ describe('User login test suite', () => {
     chai
       .request(app)
       .post('/api/v1/auth/signin')
-      .send(goodLogin)
+      .send(clientLogin)
       .end((err, res) => {
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);

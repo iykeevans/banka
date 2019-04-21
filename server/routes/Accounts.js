@@ -1,11 +1,12 @@
 import express from 'express';
 import { createAccount, deleteAccount, changeStatus } from '../controllers/Accounts';
-import verifyToken from '../middlewares/verifyToken';
+import verifyToken from '../middlewares/authentication/verifyToken';
+import isStaff from '../middlewares/authentication/staffAuth';
 
 const router = express.Router();
 
 router.post('/', verifyToken, createAccount);
-router.delete('/:accountNumber', verifyToken, deleteAccount);
-router.patch('/:accountNumber', verifyToken, changeStatus);
+router.delete('/:accountNumber', verifyToken, isStaff, deleteAccount);
+router.patch('/:accountNumber', verifyToken, isStaff, changeStatus);
 
 export default router;
