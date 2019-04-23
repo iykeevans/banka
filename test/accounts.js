@@ -322,7 +322,7 @@ describe('GET all accounts with status of active', () => {
   it('should return all accounts', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/account/account?status=active')
+      .get('/api/v1/accounts?status=active')
       .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -337,7 +337,7 @@ describe('GET all accounts with status of active', () => {
   it('should return all accounts', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/account/account?status=active')
+      .get('/api/v1/accounts?status=active')
       .set('authorization', clientToken)
       .end((err, res) => {
         expect(res.status).to.equal(401);
@@ -351,7 +351,7 @@ describe('GET all accounts with status of active', () => {
   it('should return all accounts', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/account/account?status=dormant')
+      .get('/api/v1/accounts?status=dormant')
       .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(404);
@@ -384,7 +384,7 @@ describe('GET all accounts with status of dormant', () => {
   it('should return all dormant accounts', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/account/account?status=dormant')
+      .get('/api/v1/accounts?status=dormant')
       .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -399,7 +399,7 @@ describe('GET all accounts with status of dormant', () => {
   it('should return an authentication error', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/account/account?status=dormant')
+      .get('/api/v1/accounts?status=dormant')
       .set('authorization', clientToken)
       .end((err, res) => {
         expect(res.status).to.equal(401);
@@ -413,7 +413,7 @@ describe('GET all accounts with status of dormant', () => {
   it('should return all accounts', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/account/account?status=active')
+      .get('/api/v1/accounts?status=active')
       .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(404);

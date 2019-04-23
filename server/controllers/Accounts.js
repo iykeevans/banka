@@ -184,7 +184,7 @@ export const getAccount = async (req, res) => {
 
 /**
  * @function getAccounts
- * @description function to GET ALL ACCOUNTS DETAIL.
+ * @description function to GET ALL ACCOUNTS DETAIL OR ALL ACTIVE/DORMANT ACCOUNTS.
  * @param {object} req - the user request object
  * @param {object} res - the user response object
  * @returns {object} API RESPONSE IN JSON FORMAT
@@ -192,39 +192,31 @@ export const getAccount = async (req, res) => {
  */
 export const getAccounts = async (req, res) => {
   try {
-    const accounts = await find({ table: 'accounts' });
-    res.json({
-      status: 200,
-      data: accounts,
-    });
+    const { status } = req.query;
+    if (status) {
+      const accounts = await find({ table: 'accounts', status });
+      if (accounts.length) {
+        res.json({
+          status: 200,
+          data: accounts,
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: `No accounts with status ${status}`,
+        });
+      }
+    } else {
+      const accounts = await find({ table: 'accounts' });
+      res.json({
+        status: 200,
+        data: accounts,
+      });
+    }
   } catch (error) {
     res.json({
       status: 500,
       error: error.message,
-    });
-  }
-};
-
-/**
- * @function getByStatus
- * @description function to GET ALL ACTIVE OR DORMANT ACCOUNTS.
- * @param {object} req - the user request object
- * @param {object} res - the user response object
- * @returns {object} API RESPONSE IN JSON FORMAT
- * @exports getByStatus
- */
-export const getByStatus = async (req, res) => {
-  const { status } = req.query;
-  const accounts = await find({ table: 'accounts', status });
-  if (accounts.length) {
-    res.json({
-      status: 200,
-      data: accounts,
-    });
-  } else {
-    res.status(404).json({
-      status: 404,
-      error: `No accounts with status ${status}`,
     });
   }
 };
