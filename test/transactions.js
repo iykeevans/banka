@@ -59,7 +59,6 @@ describe('Create account test suite', () => {
       .send(goodAccount)
       .end((err, res) => {
         accountnumber = res.body.data.accountNumber;
-        console.log('=====------->', accountnumber);
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');

@@ -1,5 +1,5 @@
 import jwt from 'jsonwebtoken';
-import { hash, genSaltSync, compareSync } from 'bcrypt';
+import { hashSync, genSaltSync, compareSync } from 'bcrypt-nodejs';
 import shortid from 'shortid';
 import moment from 'moment';
 import { save, findOne, find } from '../models';
@@ -20,7 +20,7 @@ export const signup = async (req, res) => {
     const id = { id: shortid.generate() };
     const createdOn = { createdOn: moment(new Date()) };
     const result = await checkSignup.validate({ ...id, ...req.body, ...createdOn });
-    const hashPassword = await hash(result.password, genSaltSync(10));
+    const hashPassword = hashSync(result.password, genSaltSync(10));
     result.password = hashPassword;
 
     if (result.isAdmin && result.type === 'client') {
