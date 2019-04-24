@@ -7,6 +7,11 @@ export const findOne = (data) => {
   return db.one(`SELECT * FROM ${data[table]} WHERE ${key} = $1`, data[key]);
 };
 
+export const find = (data) => {
+  const [table, key] = Object.keys(data);
+  return db.any(`SELECT * FROM ${data[table]} WHERE ${key} = $1`, data[key]);
+};
+
 export const remove = (data) => {
   const [table, key] = Object.keys(data);
   return db.result(`DELETE FROM ${data[table]} WHERE ${key} = $1`, data[key]);

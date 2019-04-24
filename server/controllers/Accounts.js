@@ -4,6 +4,7 @@ import {
   save,
   remove,
   findOne,
+  find,
   update,
 } from '../models';
 import { checkAccount, checkStatus } from '../helpers/validate';
@@ -40,7 +41,7 @@ export const createAccount = async (req, res) => {
     } else {
       res.status(409).json({
         status: 409,
-        error: 'account number already exists',
+        error: 'account already exists',
       });
     }
   }
@@ -101,5 +102,27 @@ export const changeStatus = async (req, res) => {
         error: 'Account either doesn\'t exist or has been deleted',
       });
     }
+  }
+};
+
+export const getHistory = async (req, res) => {
+  try {
+    const transactions = await find({ table: 'transactions', ...req.params });
+    if (transactions.length) {
+      res.json({
+        status: 200,
+        data: transactions,
+      });
+    } else {
+      res.status(404).json({
+        status: 404,
+        message: 'Nothing found',
+      });
+    }
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      error: 'invalid account number',
+    });
   }
 };
