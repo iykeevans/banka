@@ -141,3 +141,18 @@ export const getAccount = async (req, res) => {
     });
   }
 };
+
+export const getAccounts = async (req, res) => {
+  try {
+    const accounts = await find({ table: 'accounts' });
+    res.json({
+      status: 200,
+      data: accounts,
+    });
+  } catch (error) {
+    res.json({
+      status: 500,
+      error: error.message,
+    });
+  }
+};
