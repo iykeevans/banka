@@ -9,6 +9,8 @@ chai.use(chaiHttp);
 
 let clientToken;
 let staffToken;
+let accountnumber;
+let accountnumber2;
 
 describe('Create user token', () => {
   // Login client test
@@ -56,25 +58,11 @@ describe('Create account test suite', () => {
       .set('authorization', clientToken)
       .send(goodAccount)
       .end((err, res) => {
+        accountnumber = res.body.data.accountNumber;
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');
         expect(res.body.data).to.be.a('object');
-        done();
-      });
-  });
-
-  // create account conflict error
-  it('should return a create account conflict error', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/accounts')
-      .set('authorization', clientToken)
-      .send(goodAccount)
-      .end((err, res) => {
-        expect(res.status).to.equal(409);
-        expect(res.body.status).to.equal(409);
-        expect(res.body).to.have.property('error');
         done();
       });
   });
@@ -104,6 +92,7 @@ describe('Delete account test suite', () => {
       .set('authorization', clientToken)
       .send(goodAccount2)
       .end((err, res) => {
+        accountnumber2 = res.body.data.accountNumber;
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');
@@ -116,7 +105,7 @@ describe('Delete account test suite', () => {
   it('should return a delete account error', (done) => {
     chai
       .request(app)
-      .delete('/api/v1/accounts/7413162900')
+      .delete(`/api/v1/accounts/${accountnumber2}`)
       .set('authorization', clientToken)
       .end((err, res) => {
         expect(res.status).to.equal(401);
@@ -130,7 +119,7 @@ describe('Delete account test suite', () => {
   it('should delete an account', (done) => {
     chai
       .request(app)
-      .delete('/api/v1/accounts/7413162900')
+      .delete(`/api/v1/accounts/${accountnumber2}`)
       .set('authorization', staffToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -173,12 +162,12 @@ describe('Delete account test suite', () => {
 });
 
 describe('Activate or deactivate account test suite', () => {
-  // change account status test
+  // staff change account status test
   it('should activate or deactivate an account', (done) => {
     const value = { status: 'active' };
     chai
       .request(app)
-      .patch('/api/v1/accounts/6171257000')
+      .patch(`/api/v1/accounts/${accountnumber}`)
       .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
@@ -190,12 +179,12 @@ describe('Activate or deactivate account test suite', () => {
       });
   });
 
-  // change account status test
+  // client change account status test
   it('should return an activate or deactivate an account error', (done) => {
     const value = { status: 'active' };
     chai
       .request(app)
-      .patch('/api/v1/accounts/6171257000')
+      .patch(`/api/v1/accounts/${accountnumber}`)
       .set('authorization', clientToken)
       .send(value)
       .end((err, res) => {
@@ -211,7 +200,7 @@ describe('Activate or deactivate account test suite', () => {
     const value = { status: '' };
     chai
       .request(app)
-      .patch('/api/v1/accounts/6171257000')
+      .patch(`/api/v1/accounts/${accountnumber}`)
       .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
@@ -243,7 +232,7 @@ describe('Activate or deactivate account test suite', () => {
     const value = { status: 'active' };
     chai
       .request(app)
-      .patch('/api/v1/accounts/6171257000')
+      .patch(`/api/v1/accounts/${accountnumber}`)
       .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {
@@ -260,7 +249,7 @@ describe('GET specific account', () => {
   it('should return details of a specific account', (done) => {
     chai
       .request(app)
-      .get('/api/v1/accounts/6171257000')
+      .get(`/api/v1/accounts/${accountnumber}`)
       .set('authorization', clientToken)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -368,7 +357,7 @@ describe('GET all accounts with status of dormant', () => {
     const value = { status: 'dormant' };
     chai
       .request(app)
-      .patch('/api/v1/accounts/6171257000')
+      .patch(`/api/v1/accounts/${accountnumber}`)
       .set('authorization', staffToken)
       .send(value)
       .end((err, res) => {

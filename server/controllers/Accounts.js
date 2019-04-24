@@ -1,5 +1,6 @@
 import moment from 'moment';
 import shortid from 'shortid';
+import ngfaker from 'ng-faker';
 import {
   save,
   remove,
@@ -24,8 +25,11 @@ export const createAccount = async (req, res) => {
       id: shortid.generate(),
       createdOn: moment().format('MMMM Do YYYY, h:mm:ss a'),
       owner: req.user.id,
+      accountNumber: ngfaker.account.accountNumber(),
+      type: req.body.type,
+      balance: req.body.balance,
     };
-    const result = await checkAccount.validate({ ...data, ...req.body });
+    const result = await checkAccount.validate(data);
     const { accountnumber, type, balance } = await save([accountQuery, result]);
     const { firstname, lastname, email } = await findOne({ table: 'users', id: req.user.id });
 
@@ -41,17 +45,10 @@ export const createAccount = async (req, res) => {
       },
     });
   } catch (error) {
-    if (error.isJoi) {
-      res.status(400).json({
-        status: 400,
-        error: error.details[0].message,
-      });
-    } else {
-      res.status(409).json({
-        status: 409,
-        error: 'account already exists',
-      });
-    }
+    res.status(400).json({
+      status: 400,
+      error: error.details[0].message,
+    });
   }
 };
 
@@ -168,6 +165,7 @@ export const getHistory = async (req, res) => {
  * @exports getAccount
  */
 export const getAccount = async (req, res) => {
+  // TODO: WRITE JOI FOR req.params
   try {
     const account = await findOne({ table: 'accounts', ...req.params });
     res.json({
@@ -192,6 +190,7 @@ export const getAccount = async (req, res) => {
  */
 export const getAccounts = async (req, res) => {
   try {
+    // TODO: WRITE JOI TEST FOR THIS
     const { status } = req.query;
     if (status) {
       const accounts = await find({ table: 'accounts', status });
