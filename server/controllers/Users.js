@@ -5,7 +5,6 @@ import moment from 'moment';
 import { save, findOne, find } from '../models';
 import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin } from '../helpers/validate';
-// const { signup } = require('../helpers/email');
 
 /**
  * @function signup
@@ -33,8 +32,6 @@ export const signup = async (req, res) => {
       const token = await jwt.sign({ id: user.id, email: user.email },
         process.env.SECRET,
         { expiresIn: '1h' });
-
-      // await signup({ firstName, lastName, email });
 
       res.status(201).json({
         status: 201,
