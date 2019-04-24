@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { hash, genSaltSync, compareSync } from 'bcrypt';
 import shortid from 'shortid';
 import moment from 'moment';
-import { save, findOne } from '../models';
+import { save, findOne, find } from '../models';
 import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin } from '../helpers/validate';
 // const { signup } = require('../helpers/email');
@@ -92,5 +92,21 @@ export const login = async (req, res) => {
         error: 'The credentials you provided are invalid',
       });
     }
+  }
+};
+
+export const userAccounts = async (req, res) => {
+  try {
+    const user = await findOne({ table: 'users', ...req.params });
+    const accounts = await find({ table: 'accounts', owner: user.id });
+    res.json({
+      status: 200,
+      data: accounts,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      error: error.message,
+    });
   }
 };

@@ -8,6 +8,7 @@ chai.use(chaiHttp);
 
 let clientToken;
 let staffToken;
+let transactionID;
 
 describe('Create user token', () => {
   // sign in user (client) test
@@ -55,6 +56,7 @@ describe('debit transaction test suite', () => {
       .send({ amount: 5000 })
       .set('authorization', staffToken)
       .end((err, res) => {
+        transactionID = res.body.data.transactionId;
         expect(res.status).to.equal(201);
         expect(res.body.status).to.equal(201);
         expect(res.body).to.have.property('data');
@@ -205,6 +207,34 @@ describe('view account transaction history Test suite', () => {
     chai
       .request(app)
       .get('/api/v1/accounts/----llkkk/transactions')
+      .set('authorization', clientToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(500);
+        expect(res.body.status).to.equal(500);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+});
+
+describe('view specific transaction history Test suite', () => {
+  it('should return a transactions history', (done) => {
+    chai
+      .request(app)
+      .get(`/api/v1/transactions/${transactionID}`)
+      .set('authorization', clientToken)
+      .end((err, res) => {
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        done();
+      });
+  });
+
+  it('should return an error for invalid account number', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/transactions/----llkkk')
       .set('authorization', clientToken)
       .end((err, res) => {
         expect(res.status).to.equal(500);

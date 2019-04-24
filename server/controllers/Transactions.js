@@ -5,17 +5,18 @@ import { transactionQuery } from '../models/config/query';
 import { checkTransaction } from '../helpers/validate';
 // import { notification } from '../helpers/email';
 
-export default async (req, res) => {
-  const findBalance = ({ type, balance }) => {
-    if (type === 'debit') {
-      return balance - req.body.amount;
-    }
-    return balance + req.body.amount;
-  };
+const findBalance = ({ type, balance, amount }) => {
+  if (type === 'debit') {
+    return balance - amount;
+  }
+  return balance + amount;
+};
 
+export const createTransaction = async (req, res) => {
   try {
     const { balance } = await findOne({ table: 'accounts', ...req.params });
     const type = req.route.path.split('/')[2];
+    const { amount } = req.body;
 
     const result = await checkTransaction.validate({
       id: shortid.generate(),
@@ -23,9 +24,9 @@ export default async (req, res) => {
       type,
       cashier: req.user.id,
       oldBalance: balance,
-      newBalance: findBalance({ type, balance }),
+      newBalance: findBalance({ type, balance, amount }),
       ...req.params,
-      ...req.body,
+      amount,
     });
 
     if (result.newBalance < 0) {
@@ -61,5 +62,20 @@ export default async (req, res) => {
         error: error.message,
       });
     }
+  }
+};
+
+export const getTransaction = async (req, res) => {
+  try {
+    const transaction = await findOne({ table: 'transactions', ...req.params });
+    res.json({
+      status: 200,
+      data: transaction,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      error: error.message,
+    });
   }
 };
