@@ -7,6 +7,14 @@ import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin } from '../helpers/validate';
 // const { signup } = require('../helpers/email');
 
+/**
+ * @function signup
+ * @description function to SIGN UP A USER.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports signup
+ */
 export const signup = async (req, res) => {
   try {
     const id = { id: shortid.generate() };
@@ -54,6 +62,14 @@ export const signup = async (req, res) => {
   }
 };
 
+/**
+ * @function login
+ * @description function to LOG IN A USER.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports login
+ */
 export const login = async (req, res) => {
   try {
     const result = await checkLogin.validate(req.body);
@@ -95,6 +111,14 @@ export const login = async (req, res) => {
   }
 };
 
+/**
+ * @function userAccounts
+ * @description function to GET ALL ACCOUNTS OWNED BY A SPECIFIC USER.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports userAccounts
+ */
 export const userAccounts = async (req, res) => {
   try {
     const user = await findOne({ table: 'users', ...req.params });

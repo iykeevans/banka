@@ -10,6 +10,14 @@ import {
 import { checkAccount, checkStatus } from '../helpers/validate';
 import { accountQuery } from '../models/config/query';
 
+/**
+ * @function createAccount
+ * @description function CREATE ACCOUNT.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports createAccount
+ */
 export const createAccount = async (req, res) => {
   try {
     const data = {
@@ -47,6 +55,14 @@ export const createAccount = async (req, res) => {
   }
 };
 
+/**
+ * @function deleteAccount
+ * @description function to DELETE ACCOUNT.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports deleteAccount
+ */
 export const deleteAccount = async (req, res) => {
   try {
     const { rowCount } = await remove({ table: 'accounts', ...req.params });
@@ -69,6 +85,14 @@ export const deleteAccount = async (req, res) => {
   }
 };
 
+/**
+ * @function changeStatus
+ * @description function to CHANGE ACCOUNT STATUS.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports changeStatus
+ */
 export const changeStatus = async (req, res) => {
   try {
     const result = await checkStatus.validate({ ...req.params, ...req.body });
@@ -105,6 +129,14 @@ export const changeStatus = async (req, res) => {
   }
 };
 
+/**
+ * @function getHistory
+ * @description function to GET ACCOUNT'S TRANSACTION HISTORY.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports getHistory
+ */
 export const getHistory = async (req, res) => {
   try {
     const transactions = await find({ table: 'transactions', ...req.params });
@@ -127,6 +159,14 @@ export const getHistory = async (req, res) => {
   }
 };
 
+/**
+ * @function getAccount
+ * @description function to GET A SPECIFIC ACCOUNT DETAIL.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports getAccount
+ */
 export const getAccount = async (req, res) => {
   try {
     const account = await findOne({ table: 'accounts', ...req.params });
@@ -142,6 +182,14 @@ export const getAccount = async (req, res) => {
   }
 };
 
+/**
+ * @function getAccounts
+ * @description function to GET ALL ACCOUNTS DETAIL.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports getAccounts
+ */
 export const getAccounts = async (req, res) => {
   try {
     const accounts = await find({ table: 'accounts' });
@@ -157,6 +205,14 @@ export const getAccounts = async (req, res) => {
   }
 };
 
+/**
+ * @function getByStatus
+ * @description function to GET ALL ACTIVE OR DORMANT ACCOUNTS.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports getByStatus
+ */
 export const getByStatus = async (req, res) => {
   const { status } = req.query;
   const accounts = await find({ table: 'accounts', status });

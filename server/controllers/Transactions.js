@@ -5,6 +5,14 @@ import { transactionQuery } from '../models/config/query';
 import { checkTransaction } from '../helpers/validate';
 // import { notification } from '../helpers/email';
 
+/**
+ * @function findBalance
+ * @description function to CALCULATE A USERS NEW BALANCE.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {number} NEW BALANCE
+ * @exports findBalance
+ */
 const findBalance = ({ type, balance, amount }) => {
   if (type === 'debit') {
     return balance - amount;
@@ -12,6 +20,14 @@ const findBalance = ({ type, balance, amount }) => {
   return balance + amount;
 };
 
+/**
+ * @function findBalance
+ * @description function to DEBIT OR CREDIT AN ACCOUNT.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports createTransaction
+ */
 export const createTransaction = async (req, res) => {
   try {
     const { balance } = await findOne({ table: 'accounts', ...req.params });
@@ -65,6 +81,14 @@ export const createTransaction = async (req, res) => {
   }
 };
 
+/**
+ * @function getTransaction
+ * @description function to A SPECIFIC TRANSACTION DETAILS.
+ * @param {object} req - the user request object
+ * @param {object} res - the user response object
+ * @returns {object} API RESPONSE IN JSON FORMAT
+ * @exports getTransaction
+ */
 export const getTransaction = async (req, res) => {
   try {
     const transaction = await findOne({ table: 'transactions', ...req.params });
