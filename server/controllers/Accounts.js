@@ -126,3 +126,18 @@ export const getHistory = async (req, res) => {
     });
   }
 };
+
+export const getAccount = async (req, res) => {
+  try {
+    const account = await findOne({ table: 'accounts', ...req.params });
+    res.json({
+      status: 200,
+      data: account,
+    });
+  } catch (error) {
+    res.status(500).json({
+      status: 500,
+      error: error.message,
+    });
+  }
+};

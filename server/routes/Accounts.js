@@ -1,13 +1,14 @@
 import express from 'express';
 import {
   createAccount, deleteAccount, changeStatus,
-  getHistory,
+  getHistory, getAccount,
 } from '../controllers/Accounts';
 import verifyToken from '../middlewares/authentication/verifyToken';
 import isStaff from '../middlewares/authentication/staffAuth';
 
 const router = express.Router();
 
+router.get('/:accountNumber', verifyToken, getAccount);
 router.get('/:accountNumber/transactions', verifyToken, getHistory);
 router.post('/', verifyToken, createAccount);
 router.delete('/:accountNumber', verifyToken, isStaff, deleteAccount);
