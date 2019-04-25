@@ -1,12 +1,12 @@
 import express from 'express';
 import { createTransaction, getTransaction } from '../controllers/Transactions';
 import verifyToken from '../middlewares/authentication/verifyToken';
-import isStaff from '../middlewares/authentication/staffAuth';
+import cashierAuth from '../middlewares/authentication/cashierAuth';
 
 const router = express.Router();
 
 router.get('/:id', verifyToken, getTransaction);
-router.post('/:accountNumber(\\d+)/debit', verifyToken, isStaff, createTransaction);
-router.post('/:accountNumber(\\d+)/credit', verifyToken, isStaff, createTransaction);
+router.post('/:accountNumber(\\d+)/debit', verifyToken, cashierAuth, createTransaction);
+router.post('/:accountNumber(\\d+)/credit', verifyToken, cashierAuth, createTransaction);
 
 export default router;
