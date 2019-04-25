@@ -59,9 +59,14 @@
     "shortid": "^2.2.14"
   },
   "nyc": {
-    "require": ["@babel/register"],
-    "reporter": ["lcov", "text"],
-    "sourceMap": false,
-    "instrument": false
+    "require": [
+      "@babel/register"
+    ],
+    "reporter": [
+      "lcov",
+      "text"
+    ],
+    "sourceMap": true,
+    "instrument": true
   }
 }

@@ -5,6 +5,7 @@ import {
 } from '../controllers/Accounts';
 import verifyToken from '../middlewares/authentication/verifyToken';
 import isStaff from '../middlewares/authentication/staffAuth';
+import isAdmin from '../middlewares/authentication/adminAuth';
 
 const router = express.Router();
 
@@ -13,6 +14,6 @@ router.get('/:accountNumber', verifyToken, getAccount);
 router.get('/:accountNumber/transactions', verifyToken, getHistory);
 router.post('/', verifyToken, createAccount);
 router.delete('/:accountNumber', verifyToken, isStaff, deleteAccount);
-router.patch('/:accountNumber', verifyToken, isStaff, changeStatus);
+router.patch('/:accountNumber', verifyToken, isAdmin, changeStatus);
 
 export default router;
