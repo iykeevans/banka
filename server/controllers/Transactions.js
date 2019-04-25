@@ -3,7 +3,6 @@ import shortid from 'shortid';
 import { save, update, findOne } from '../models';
 import { transactionQuery } from '../models/config/query';
 import { checkTransaction } from '../helpers/validate';
-// import { notification } from '../helpers/email';
 
 /**
  * @function findBalance
@@ -53,7 +52,6 @@ export const createTransaction = async (req, res) => {
     } else {
       const transaction = await save([transactionQuery, result]);
       await update({ table: 'accounts', ...req.params, balance: result.newBalance });
-      // await notification(transaction);
       res.status(201).json({
         status: 201,
         data: {
