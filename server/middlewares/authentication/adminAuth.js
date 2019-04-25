@@ -5,7 +5,7 @@
  * @param {object} res - the user response object
  * @param {object} next - goes to the next task
  * @returns {object} API RESPONSE IN JSON FORMAT
- * @exports isStaff
+ * @exports adminAuth
  */
 export default async (req, res, next) => {
   const { isAdmin } = req.user;

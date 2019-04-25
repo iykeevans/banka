@@ -20,15 +20,15 @@ export default async (req, res, next) => {
       });
     } else {
       const token = req.headers.authorization.split(' ')[1];
-      const decoded = await jwt.verify(token, process.env.SECRET);
-      const user = await findOne({ table: 'users', id: decoded.id });
-      if (!user) {
+      const { id, isAdmin } = await jwt.verify(token, process.env.SECRET);
+      const { type } = await findOne({ table: 'users', id });
+      if (!type) {
         res.status(401).json({
           status: 401,
           error: 'You are not authorized to view this resource',
         });
       } else {
-        req.user = { type: user.type, id: decoded.id, isAdmin: decoded.isAdmin };
+        req.user = { type, id, isAdmin };
         next();
       }
     }

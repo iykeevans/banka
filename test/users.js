@@ -70,20 +70,6 @@ describe('User signup test suite', () => {
       });
   });
 
-  // test user (admin) bad sign up
-  it('should return an admin signup error', (done) => {
-    chai
-      .request(app)
-      .post('/api/v1/auth/signup')
-      .send(badAdminSignup)
-      .end((err, res) => {
-        expect(res.status).to.equal(400);
-        expect(res.body.status).to.equal(400);
-        expect(res.body).to.have.property('error');
-        done();
-      });
-  });
-
   // test validation
   it('should return a user validation error', (done) => {
     chai
