@@ -136,23 +136,33 @@ export const changeStatus = async (req, res) => {
  */
 export const getHistory = async (req, res) => {
   try {
+    const { type, id } = req.user;
+    const { owner } = await findOne({ table: 'accounts', ...req.params });
     const transactions = await find({ table: 'transactions', ...req.params });
-    if (transactions.length) {
+
+    if ((type === 'client' && id === owner) || type === 'staff') {
       res.json({
         status: 200,
         data: transactions,
       });
     } else {
-      res.status(404).json({
-        status: 404,
-        message: 'Nothing found',
+      res.json({
+        status: 401,
+        error: 'You are not allowed to view this resource',
       });
     }
   } catch (error) {
-    res.status(500).json({
-      status: 500,
-      error: 'invalid account number',
-    });
+    if (error.routine === 'scanint8') {
+      res.status(500).json({
+        status: 500,
+        error,
+      });
+    } else {
+      res.status(404).json({
+        status: 404,
+        error,
+      });
+    }
   }
 };
 
@@ -167,11 +177,19 @@ export const getHistory = async (req, res) => {
 export const getAccount = async (req, res) => {
   // TODO: WRITE JOI FOR req.params
   try {
+    const { type, id } = req.user;
     const account = await findOne({ table: 'accounts', ...req.params });
-    res.json({
-      status: 200,
-      data: account,
-    });
+    if ((type === 'client' && id === account.owner) || type === 'staff') {
+      res.json({
+        status: 200,
+        data: account,
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to view this resource',
+      });
+    }
   } catch (error) {
     res.status(500).json({
       status: 500,

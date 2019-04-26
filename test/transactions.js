@@ -220,7 +220,7 @@ describe('view account transaction history Test suite', () => {
       .end((err, res) => {
         expect(res.status).to.equal(404);
         expect(res.body.status).to.equal(404);
-        expect(res.body).to.have.property('message');
+        expect(res.body).to.have.property('error');
         done();
       });
   });

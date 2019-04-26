@@ -89,11 +89,20 @@ export const createTransaction = async (req, res) => {
  */
 export const getTransaction = async (req, res) => {
   try {
+    const { type, id } = req.user;
     const transaction = await findOne({ table: 'transactions', ...req.params });
-    res.json({
-      status: 200,
-      data: transaction,
-    });
+    const { owner } = await findOne({ table: 'accounts', accountnumber: transaction.accountnumber });
+    if ((type === 'client' && id === owner) || type === 'staff') {
+      res.json({
+        status: 200,
+        data: transaction,
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to view this resource',
+      });
+    }
   } catch (error) {
     res.status(500).json({
       status: 500,
