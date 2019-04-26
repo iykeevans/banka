@@ -118,12 +118,20 @@ export const login = async (req, res) => {
  */
 export const userAccounts = async (req, res) => {
   try {
+    const { type, id } = req.user;
     const user = await findOne({ table: 'users', ...req.params });
     const accounts = await find({ table: 'accounts', owner: user.id });
-    res.json({
-      status: 200,
-      data: accounts,
-    });
+    if ((type === 'client' && id === accounts.owner) || type === 'staff') {
+      res.json({
+        status: 200,
+        data: accounts,
+      });
+    } else {
+      res.status(401).json({
+        status: 401,
+        error: 'You are not allowed to view this resource',
+      });
+    }
   } catch (error) {
     res.status(500).json({
       status: 500,

@@ -8,19 +8,13 @@
  * @exports isStaff
  */
 export default async (req, res, next) => {
-    const { isAdmin } = req.user;
-    console.log('==================>', isAdmin);
-    try {
-      if (isAdmin) {
-        next();
-      } else {
-        res.status(401).json({
-          status: 401,
-          error: 'You are now allowed to view this resource',
-        });
-      }
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  
+  const { isAdmin } = req.user;
+  if (isAdmin) {
+    next();
+  } else {
+    res.status(401).json({
+      status: 401,
+      error: 'You are now allowed to view this resource',
+    });
+  }
+};
