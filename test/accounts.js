@@ -2,13 +2,14 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import app from '../server';
 import { goodAccount, goodAccount2, badAccount } from './mockData/accounts';
-import { clientLogin, staffLogin } from './mockData/user';
+import { clientLogin, staffLogin, adminLogin } from './mockData/user';
 
 const { expect } = chai;
 chai.use(chaiHttp);
 
 let clientToken;
 let staffToken;
+let adminToken;
 let accountnumber;
 let accountnumber2;
 
@@ -30,7 +31,7 @@ describe('Create user token', () => {
       });
   });
 
-  // Login client test
+  // Login staff test
   it('should signin staff', (done) => {
     chai
       .request(app)
@@ -38,6 +39,23 @@ describe('Create user token', () => {
       .send(staffLogin)
       .end((err, res) => {
         staffToken = `Bearer ${res.body.data.token}`;
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+
+  // Login admin test
+  it('should signin admin', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(adminLogin)
+      .end((err, res) => {
+        adminToken = `Bearer ${res.body.data.token}`;
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);
         expect(res.body).to.have.property('data');
@@ -168,7 +186,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch(`/api/v1/accounts/${accountnumber}`)
-      .set('authorization', staffToken)
+      .set('authorization', adminToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(200);
@@ -201,7 +219,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch(`/api/v1/accounts/${accountnumber}`)
-      .set('authorization', staffToken)
+      .set('authorization', adminToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -217,7 +235,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch('/api/v1/accounts/6171256555')
-      .set('authorization', staffToken)
+      .set('authorization', adminToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(404);
@@ -233,7 +251,7 @@ describe('Activate or deactivate account test suite', () => {
     chai
       .request(app)
       .patch(`/api/v1/accounts/${accountnumber}`)
-      .set('authorization', staffToken)
+      .set('authorization', adminToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(409);
@@ -358,7 +376,7 @@ describe('GET all accounts with status of dormant', () => {
     chai
       .request(app)
       .patch(`/api/v1/accounts/${accountnumber}`)
-      .set('authorization', staffToken)
+      .set('authorization', adminToken)
       .send(value)
       .end((err, res) => {
         expect(res.status).to.equal(200);
