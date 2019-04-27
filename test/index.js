@@ -32,4 +32,16 @@ describe('API Home test suite', () => {
         done();
       });
   });
+
+  it('should throw an error if app can\'t handle route', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/funny')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
 });

@@ -104,7 +104,7 @@ describe('debit transaction test suite', () => {
   });
 
   // transaction amount test
-  it('should return a transaction error', (done) => {
+  it('should return a transaction error (insufficient funds)', (done) => {
     chai
       .request(app)
       .post(`/api/v1/transactions/${accountnumber}/debit`)
@@ -134,15 +134,15 @@ describe('debit transaction test suite', () => {
   });
 
   // test to check for wrong account number
-  it('should return a debit transaction error', (done) => {
+  it('should return a debit transaction for wrong account number', (done) => {
     chai
       .request(app)
       .post('/api/v1/transactions/6171257141/debit')
       .send({ amount: 5000 })
       .set('authorization', staffToken)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(404);
+        expect(res.body.status).to.equal(404);
         expect(res.body).to.have.property('error');
         done();
       });
@@ -224,19 +224,6 @@ describe('view account transaction history Test suite', () => {
         done();
       });
   });
-
-  it('should return an error for invalid account number', (done) => {
-    chai
-      .request(app)
-      .get('/api/v1/accounts/----llkkk/transactions')
-      .set('authorization', clientToken)
-      .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
-        expect(res.body).to.have.property('error');
-        done();
-      });
-  });
 });
 
 describe('view specific transaction history Test suite', () => {
@@ -253,14 +240,14 @@ describe('view specific transaction history Test suite', () => {
       });
   });
 
-  it('should return an error for invalid account number', (done) => {
+  it('should return an error for invalid ID', (done) => {
     chai
       .request(app)
       .get('/api/v1/transactions/----llkkk')
       .set('authorization', clientToken)
       .end((err, res) => {
-        expect(res.status).to.equal(500);
-        expect(res.body.status).to.equal(500);
+        expect(res.status).to.equal(404);
+        expect(res.body.status).to.equal(404);
         expect(res.body).to.have.property('error');
         done();
       });

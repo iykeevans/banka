@@ -17,6 +17,19 @@ app.use(bodyParser.json());
 
 app.use(routes);
 
+app.use((req, res, next) => {
+  const error = new Error('something unexpected happened');
+  error.status = 400;
+  next(error);
+});
+
+app.use((error, req, res, next) => {
+  res.status(error.status || 500).json({
+    status: 400,
+    error: error.message,
+  });
+});
+
 app.listen(port, () => console.log(`now listening to port ${port}`));
 
 module.exports = app;

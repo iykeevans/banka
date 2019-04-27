@@ -61,3 +61,8 @@ export const update = (data) => {
   return db.one(`UPDATE ${data[table]} SET ${status} = $1 WHERE ${accountnumber} = $2 RETURNING *`,
     [data[status], data[accountnumber]]);
 };
+
+export const findByResult = (data) => {
+  const [table, key] = Object.keys(data);
+  return db.result(`SELECT * FROM ${data[table]} WHERE ${key} = $1`, data[key]);
+};
