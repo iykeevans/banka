@@ -2,9 +2,11 @@ import jwt from 'jsonwebtoken';
 import { hashSync, genSaltSync, compareSync } from 'bcrypt-nodejs';
 import shortid from 'shortid';
 import moment from 'moment';
-import { save, findOne, find } from '../models';
+import {
+  save, findOne, find, findByResult,
+} from '../models';
 import { userQuery } from '../models/config/query';
-import { checkSignup, checkLogin } from '../helpers/validate';
+import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/Users';
 
 /**
  * @function signup
@@ -119,17 +121,25 @@ export const login = async (req, res) => {
 export const userAccounts = async (req, res) => {
   try {
     const { type, id } = req.user;
-    const user = await findOne({ table: 'users', ...req.params });
-    const accounts = await find({ table: 'accounts', owner: user.id });
-    if ((type === 'client' && id === accounts.owner) || type === 'staff') {
-      res.json({
-        status: 200,
-        data: accounts,
-      });
+    const { email } = await checkEmail.validate(req.params);
+    const { rows, rowCount } = await findByResult({ table: 'users', email });
+    if (rowCount) {
+      const accounts = await find({ table: 'accounts', owner: rows[0].id });
+      if ((type === 'client' && id === accounts.owner) || type === 'staff') {
+        res.json({
+          status: 200,
+          data: accounts,
+        });
+      } else {
+        res.status(401).json({
+          status: 401,
+          error: 'You are not allowed to view this resource',
+        });
+      }
     } else {
-      res.status(401).json({
-        status: 401,
-        error: 'You are not allowed to view this resource',
+      res.status(404).json({
+        status: 404,
+        error: 'email doesn\'t exist',
       });
     }
   } catch (error) {

@@ -7,8 +7,9 @@ import {
   findOne,
   find,
   update,
+  findByResult,
 } from '../models';
-import { checkAccount, checkStatus } from '../helpers/validate';
+import { checkAccount, checkStatus } from '../helpers/validations/Accounts';
 import { accountQuery } from '../models/config/query';
 
 /**
@@ -93,21 +94,27 @@ export const deleteAccount = async (req, res) => {
 export const changeStatus = async (req, res) => {
   try {
     const result = await checkStatus.validate({ ...req.params, ...req.body });
-    const account = await findOne({ table: 'accounts', accountnumber: result.accountNumber });
-
-    if (account.status === result.status) {
-      res.status(409).json({
-        status: 409,
-        error: `status is already defined as ${account.status}`,
-      });
+    const { rows, rowCount } = await findByResult({ table: 'accounts', accountnumber: result.accountNumber });
+    if (rowCount) {
+      if (rows[0].status === result.status) {
+        res.status(409).json({
+          status: 409,
+          error: `status is already defined as ${rows[0].status}`,
+        });
+      } else {
+        const { accountnumber, status } = await update({ table: 'accounts', ...result });
+        res.json({
+          status: 200,
+          data: {
+            accountNumber: accountnumber,
+            status,
+          },
+        });
+      }
     } else {
-      const { accountnumber, status } = await update({ table: 'accounts', ...result });
-      res.json({
-        status: 200,
-        data: {
-          accountNumber: accountnumber,
-          status,
-        },
+      res.status(404).json({
+        status: 404,
+        error: 'accountnumber doesn\'t exist',
       });
     }
   } catch (error) {
@@ -118,10 +125,7 @@ export const changeStatus = async (req, res) => {
         error: error.details[0].message,
       });
     } else {
-      res.status(404).json({
-        status: 404,
-        error: 'Account either doesn\'t exist or has been deleted',
-      });
+      console.log(error);
     }
   }
 };
@@ -137,32 +141,29 @@ export const changeStatus = async (req, res) => {
 export const getHistory = async (req, res) => {
   try {
     const { type, id } = req.user;
-    const { owner } = await findOne({ table: 'accounts', ...req.params });
-    const transactions = await find({ table: 'transactions', ...req.params });
-
-    if ((type === 'client' && id === owner) || type === 'staff') {
-      res.json({
-        status: 200,
-        data: transactions,
-      });
-    } else {
-      res.json({
-        status: 401,
-        error: 'You are not allowed to view this resource',
-      });
-    }
-  } catch (error) {
-    if (error.routine === 'scanint8') {
-      res.status(500).json({
-        status: 500,
-        error,
-      });
+    const { rows, rowCount } = await findByResult({ table: 'accounts', ...req.params });
+    if (rowCount) {
+      const { owner } = rows[0];
+      const transactions = await find({ table: 'transactions', ...req.params });
+      if ((type === 'client' && id === owner) || type === 'staff') {
+        res.json({
+          status: 200,
+          data: transactions,
+        });
+      } else {
+        res.json({
+          status: 401,
+          error: 'You are not allowed to view this resource',
+        });
+      }
     } else {
       res.status(404).json({
         status: 404,
-        error,
+        error: 'This account number doesn\'t exist',
       });
     }
+  } catch (error) {
+    console.log(error);
   }
 };
 
@@ -178,16 +179,23 @@ export const getAccount = async (req, res) => {
   // TODO: WRITE JOI FOR req.params
   try {
     const { type, id } = req.user;
-    const account = await findOne({ table: 'accounts', ...req.params });
-    if ((type === 'client' && id === account.owner) || type === 'staff') {
-      res.json({
-        status: 200,
-        data: account,
-      });
+    const { rows, rowCount } = await findByResult({ table: 'accounts', ...req.params });
+    if (rowCount) {
+      if ((type === 'client' && id === rows[0].owner) || type === 'staff') {
+        res.json({
+          status: 200,
+          data: rows[0],
+        });
+      } else {
+        res.status(401).json({
+          status: 401,
+          error: 'You are not allowed to view this resource',
+        });
+      }
     } else {
-      res.status(401).json({
-        status: 401,
-        error: 'You are not allowed to view this resource',
+      res.status(404).json({
+        status: 404,
+        error: 'This resource doesn\'t exist',
       });
     }
   } catch (error) {
@@ -208,7 +216,6 @@ export const getAccount = async (req, res) => {
  */
 export const getAccounts = async (req, res) => {
   try {
-    // TODO: WRITE JOI TEST FOR THIS
     const { status } = req.query;
     if (status) {
       const accounts = await find({ table: 'accounts', status });
@@ -225,10 +232,17 @@ export const getAccounts = async (req, res) => {
       }
     } else {
       const accounts = await find({ table: 'accounts' });
-      res.json({
-        status: 200,
-        data: accounts,
-      });
+      if (accounts.length) {
+        res.json({
+          status: 200,
+          data: accounts,
+        });
+      } else {
+        res.status(404).json({
+          status: 404,
+          error: 'This resource(S) doesn\'t exist',
+        });
+      }
     }
   } catch (error) {
     res.json({
