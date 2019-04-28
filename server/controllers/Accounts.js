@@ -118,7 +118,6 @@ export const changeStatus = async (req, res) => {
       });
     }
   } catch (error) {
-    // console.log(error);
     if (error.isJoi) {
       res.status(400).json({
         status: 400,

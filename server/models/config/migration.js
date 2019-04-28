@@ -35,7 +35,7 @@ CREATE TABLE transactions (
   type TEXT NOT NULL,
   accountNumber BIGINT NOT NULL,
   cashier TEXT REFERENCES users(id) NOT NULL,
-  amount INTEGER NOT NULL,
+  amount FLOAT NOT NULL,
   oldBalance FLOAT NOT NULL,
   newBalance FLOAT NOT NULL,
   createdOn TIMESTAMP,

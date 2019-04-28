@@ -3,7 +3,7 @@ import { hashSync, genSaltSync, compareSync } from 'bcrypt-nodejs';
 import shortid from 'shortid';
 import moment from 'moment';
 import {
-  save, findOne, find, findByResult,
+  save, find, findByResult,
 } from '../models';
 import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/Users';
@@ -18,33 +18,44 @@ import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/User
  */
 export const signup = async (req, res) => {
   try {
-    const id = { id: shortid.generate() };
     const createdOn = { createdOn: moment(new Date()) };
-    const result = await checkSignup.validate({ ...id, ...req.body, ...createdOn });
-    const hashPassword = hashSync(result.password, genSaltSync(10));
-    result.password = hashPassword;
+    const result = await checkSignup.validate({
+      id: shortid.generate(), ...req.body, ...createdOn,
+    });
 
-    if (result.isAdmin && result.type === 'client') {
+    if (result.isAdmin && result.type !== 'staff') {
       res.status(400).json({
         status: 400,
-        error: 'Admin cannot be a client',
+        error: 'Please admin must be a staff',
       });
     } else {
-      const user = await save([userQuery, result]);
-      const token = await jwt.sign({ id: user.id, email: user.email },
-        process.env.SECRET,
-        { expiresIn: '1h' });
+      const hashPassword = hashSync(result.password, genSaltSync(10));
+      result.password = hashPassword;
+      const user = await find({ table: 'users', email: result.email });
+      if (user.length) {
+        res.status(409).json({
+          status: 409,
+          error: 'User already exists',
+        });
+      } else {
+        const {
+          id, firstname, lastname, email,
+        } = await save([userQuery, result]);
+        const token = await jwt.sign({ id, email },
+          process.env.SECRET,
+          { expiresIn: '1h' });
 
-      res.status(201).json({
-        status: 201,
-        data: {
-          token,
-          id: user.id,
-          firstName: user.firstname,
-          lastName: user.lastname,
-          email: user.email,
-        },
-      });
+        res.status(201).json({
+          status: 201,
+          data: {
+            token,
+            id,
+            firstName: firstname,
+            lastName: lastname,
+            email,
+          },
+        });
+      }
     }
   } catch (error) {
     if (error.isJoi) {
@@ -53,9 +64,9 @@ export const signup = async (req, res) => {
         error: error.details[0].message,
       });
     } else {
-      res.status(409).json({
-        status: 409,
-        error: 'Email already exist',
+      res.status(500).json({
+        status: 500,
+        error: error.message,
       });
     }
   }
@@ -72,15 +83,19 @@ export const signup = async (req, res) => {
 export const login = async (req, res) => {
   try {
     const result = await checkLogin.validate(req.body);
-    const user = await findOne({ table: 'users', email: result.email });
-
-    if (user && !compareSync(result.password, user.password)) {
+    const user = await find({ table: 'users', email: result.email });
+    if (!user.length) {
+      res.status(401).json({
+        status: 401,
+        error: 'The credentials you provided are invalid',
+      });
+    } else if (user.length && !compareSync(result.password, user[0].password)) {
       res.status(401).json({
         status: 401,
         error: 'The credentials you provided are invalid',
       });
     } else {
-      const token = await jwt.sign({ id: user.id, isAdmin: user.is_admin },
+      const token = await jwt.sign({ id: user[0].id, isAdmin: user[0].is_admin },
         process.env.SECRET,
         { expiresIn: '1h' });
 
@@ -88,10 +103,10 @@ export const login = async (req, res) => {
         status: 200,
         data: {
           token,
-          id: user.id,
-          firstName: user.firstname,
-          lastName: user.lastname,
-          email: user.email,
+          id: user[0].id,
+          firstName: user[0].firstname,
+          lastName: user[0].lastname,
+          email: user[0].email,
         },
       });
     }
@@ -102,9 +117,9 @@ export const login = async (req, res) => {
         error: error.details[0].message,
       });
     } else {
-      res.status(401).json({
-        status: 401,
-        error: 'The credentials you provided are invalid',
+      res.status(500).json({
+        status: 500,
+        error: error.message,
       });
     }
   }
