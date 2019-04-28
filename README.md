@@ -63,7 +63,7 @@ This application was deployed to the following:
 - [Heroku](https://andela-bank.herokuapp.com) : For API endpoints.
 - [Github Pages](https://iykeevans.github.io/banka/UI) : UI template for this application.
 - [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2320198) : Pivot Tracker stories
-- [Swagger Documentation](https://andela-bank.herokuapp.com) : Swagger Documentation
+- [Swagger Documentation](https://andela-bank.herokuapp.com/api-docs) : Swagger Documentation
 
 ## API Endpoints
 | METHOD   | DESCRIPTION                                  | ENDPOINTS                 
