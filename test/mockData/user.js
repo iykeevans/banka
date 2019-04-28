@@ -24,7 +24,7 @@ export const adminSignup = {
 };
 
 export const badAdminSignup = {
-  email: 'spec@yahoo.com',
+  email: 'spec22@yahoo.com',
   firstName: 'chisom',
   lastName: 'ezeani',
   password: 'slitherman',
@@ -51,8 +51,8 @@ export const staffLogin = {
 };
 
 export const adminLogin = {
-  email: 'spec@yahoo.com',
-  password: 'slitherman',
+  email: 'elochi238@gmail.com',
+  password: 'rosemary',
 };
 
 export const badLogin = {
