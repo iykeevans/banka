@@ -12,6 +12,9 @@ switch (process.env.NODE_ENV) {
   case 'Development':
     connectionString = process.env.DATABASE_URL;
     break;
+  case 'Production':
+    connectionString = process.env.PROD_DATABASE;
+    break;
   default:
     throw new Error('Please specify development environment in .env file');
 }

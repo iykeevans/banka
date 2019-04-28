@@ -9,10 +9,11 @@
     "build": "npm run clean && npm run build-babel",
     "test": "cross-env NODE_ENV=Test npm run migrate && cross-env NODE_ENV=Test nyc mocha test/index.js --exit --timeout 25000",
     "dev": "cross-env NODE_ENV=Development nodemon --exec babel-node server",
-    "start": "npm run build && node bundle",
+    "start": "npm run migration && npm run build && node bundle",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "seed": "babel-node server/models/config/seed.js",
-    "migrate": "babel-node server/models/config/migration.js"
+    "migrate": "babel-node server/models/config/migration.js",
+    "migration": "npm run migrate && npm run seed"
   },
   "repository": {
     "type": "git",
@@ -47,6 +48,7 @@
     "bcrypt-nodejs": "0.0.3",
     "body-parser": "^1.18.3",
     "chai-http": "^4.2.1",
+    "cors": "^2.8.5",
     "dotenv": "^7.0.0",
     "express": "^4.16.4",
     "joi": "^14.3.1",
@@ -56,7 +58,8 @@
     "ng-faker": "^1.1.0",
     "nodemailer": "^6.0.0",
     "pg-promise": "^8.6.5",
-    "shortid": "^2.2.14"
+    "shortid": "^2.2.14",
+    "swagger-ui-express": "^4.0.2"
   },
   "nyc": {
     "require": [
