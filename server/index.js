@@ -5,7 +5,7 @@ import swaggerUi from 'swagger-ui-express';
 import '@babel/polyfill';
 import env from 'dotenv';
 import routes from './routes';
-import swaggerDocument from './swagger.json';
+import swaggerDocument from '../swagger.json';
 
 env.config();
 
