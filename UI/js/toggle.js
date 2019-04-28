@@ -3,6 +3,8 @@ const signIn = document.getElementById('sign-in');
 const signUp = document.getElementById('sign-up');
 const formSignUp = document.getElementById('forms__sign-up');
 const formSignIn = document.getElementById('forms__sign-in');
+const signInBtn = document.getElementById('signInBtn');
+const signUpBtn = document.getElementById('signUpBtn');
 
 // function to show sign in options
 const showOptions = () => {
@@ -10,12 +12,13 @@ const showOptions = () => {
   formSignUp.classList.toggle('is-hidden');
   formSignIn.classList.toggle('is-hidden');
   signUp.classList.toggle('is-hidden');
-}
+};
+
 
 signInBtn.addEventListener('click', showOptions);
 signUpBtn.addEventListener('click', showOptions);
-mobileNavBtn.addEventListener('click', () => {
-  // nav.style.display = 'none'
-  // nav.classList.add('is-hidden');
-  // console.log(nav.style.display)
-});
+// mobileNavBtn.addEventListener('click', () => {
+//   // nav.style.display = 'none'
+//   // nav.classList.add('is-hidden');
+//   // console.log(nav.style.display)
+// });
