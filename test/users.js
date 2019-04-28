@@ -12,6 +12,7 @@ import {
   badLogin,
   invalidLogin,
   invalidLogin2,
+  adminLogin,
 } from './mockData/user';
 
 const { expect } = chai;
@@ -19,6 +20,26 @@ chai.use(chaiHttp);
 
 let clientToken;
 let staffToken;
+let adminToken;
+
+// Admin login test
+describe('should login admin', () => {
+  it('should login admin', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signin')
+      .send(adminLogin)
+      .end((err, res) => {
+        adminToken = `Bearer ${res.body.data.token}`;
+        expect(res.status).to.equal(200);
+        expect(res.body.status).to.equal(200);
+        expect(res.body).to.have.property('data');
+        expect(res.body.data).to.have.property('token');
+        expect(res.body.data).to.be.a('object');
+        done();
+      });
+  });
+});
 
 // User sign up test
 describe('User signup test suite', () => {
@@ -42,7 +63,8 @@ describe('User signup test suite', () => {
   it('should signup a staff successfully', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/user')
+      .set('authorization', adminToken)
       .send(staffSignup)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -58,7 +80,8 @@ describe('User signup test suite', () => {
   it('should signup an admin successfully', (done) => {
     chai
       .request(app)
-      .post('/api/v1/auth/signup')
+      .post('/api/v1/user')
+      .set('authorization', adminToken)
       .send(adminSignup)
       .end((err, res) => {
         expect(res.status).to.equal(201);
@@ -76,6 +99,20 @@ describe('User signup test suite', () => {
       .request(app)
       .post('/api/v1/auth/signup')
       .send(badSignup)
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
+        done();
+      });
+  });
+
+  // test for user type error
+  it('should return a user type error', (done) => {
+    chai
+      .request(app)
+      .post('/api/v1/auth/signup')
+      .send(badAdminSignup)
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.status).to.equal(400);

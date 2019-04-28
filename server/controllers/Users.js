@@ -18,9 +18,22 @@ import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/User
  */
 export const signup = async (req, res) => {
   try {
-    const createdOn = { createdOn: moment(new Date()) };
+    let { type } = req.body;
+    const {
+      password, firstName, lastName, isAdmin,
+    } = req.body;
+
+    type = (req.user) ? 'staff' : 'client';
+
     const result = await checkSignup.validate({
-      id: shortid.generate(), ...req.body, ...createdOn,
+      id: shortid.generate(),
+      createdOn: moment(new Date()),
+      email: req.body.email,
+      password,
+      firstName,
+      lastName,
+      type,
+      isAdmin,
     });
 
     if (result.isAdmin && result.type !== 'staff') {
@@ -119,7 +132,7 @@ export const login = async (req, res) => {
     } else {
       res.status(500).json({
         status: 500,
-        error: error.message,
+        error,
       });
     }
   }

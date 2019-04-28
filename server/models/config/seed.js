@@ -1,19 +1,21 @@
 import ngfaker from 'ng-faker';
+import { hashSync, genSaltSync } from 'bcrypt-nodejs';
 import moment from 'moment';
 import shortid from 'shortid';
 import db from '.';
 import { accountQuery, transactionQuery, userQuery } from './query';
 
 const id = shortid.generate();
+const password = hashSync('rosemary', genSaltSync(10));
 
 const user = {
   id,
-  email: `${ngfaker.name.firstName()}@gmail.com`,
-  firstName: ngfaker.name.firstName(),
-  lastName: ngfaker.name.lastName(),
-  password: shortid.generate(),
-  type: 'client',
-  isAdmin: false,
+  email: 'elochi238@gmail.com',
+  firstName: 'ikenna',
+  lastName: 'ezeani',
+  password,
+  type: 'staff',
+  isAdmin: true,
   createdOn: moment(new Date()),
 };
 
@@ -22,7 +24,7 @@ const account = {
   accountNumber: ngfaker.account.accountNumber(),
   owner: id,
   type: 'savings',
-  status: 'active',
+  status: 'draft',
   balance: Math.random() * 10000,
   createdOn: moment(new Date()),
 };
