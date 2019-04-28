@@ -1,8 +1,11 @@
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
+import swaggerUi from 'swagger-ui-express';
 import '@babel/polyfill';
 import env from 'dotenv';
 import routes from './routes';
+import swaggerDocument from './swagger.json';
 
 env.config();
 
@@ -14,6 +17,11 @@ app.use(bodyParser.urlencoded({ extended: false }));
 
 // parses JSON requests
 app.use(bodyParser.json());
+
+// set up cross origin controls
+app.use(cors());
+
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 app.use(routes);
 
