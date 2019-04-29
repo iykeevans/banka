@@ -24,6 +24,7 @@
         <a href="./create.html" class="side-nav__link active">Create Account</a>
         <a href="./transactions.html" class="side-nav__link">Transactions</a>
         <a href="./profile.html" class="side-nav__link">Profile</a>
+        <button class="side-nav__link side-nav__link--button primary--bg" id="logOut">Log Out</button>
       </div>
       
     </nav>
@@ -36,7 +37,7 @@
           <a href="#nav" class="nav__side-nav centered is-hidden">&#9776;</a>
         </div> -->
 
-        <form class="form__container">
+        <form class="form__container" onsubmit="createAccount(event)">
           <h2 class="center">Create Account</h2>
           <div class="form__wrapper flexed flexed--col spaced">
             <select name="" id="" class="form__input form__input--wide">
@@ -75,5 +76,6 @@
   <script>
     feather.replace({ 'stroke-width': 0.5 })
   </script>
+  <script src="../js/user.js"></script>
 </body>
 </html>

@@ -21,7 +21,7 @@
 
 	<main class="flexed">
 
-		<div class="auth flexed flexed--col primary--bg" id="sign-in">
+		<div class="auth flexed flexed--col primary--bg is-hidden" id="sign-in">
 			
 			<div class="wrapper flexed flexed--col centered centered--col">
 				<h1 class="auth__heading">Welcome, back!</h1>
@@ -33,9 +33,15 @@
 
 		<div class="forms">
 
-			<div class="wrapper flexed flexed--col centered centered--col is-hidden" id="forms__sign-in">
+			<div class="wrapper flexed flexed--col centered centered--col" id="forms__sign-in">
 				<h1 class="forms__header">Sign in</h1>
-				<form class="wrapper--fluid flexed flexed--col" action="./user/profile.html">
+				<form class="wrapper--fluid flexed flexed--col" id="signInForm" onsubmit="userSignIn(event)">
+					<div class="toast" id="signInToast"></div>
+					<select name="" id="" class="forms__input select-text" required>
+						<option>CUSTOMER</option>
+						<option>ADMIN</option>
+						<option>CASHIER</option>
+					</select>
 					<input type="text" placeholder="Email" class="forms__input">
 					<input type="text" placeholder="Password" class="forms__input">
 					<a href="#" class="forms__forgot">Forgot your password?</a>
@@ -43,9 +49,10 @@
 				</form>
 			</div>
 
-			<div class="wrapper centered centered--col flexed flexed--col" id="forms__sign-up">
+			<div class="wrapper centered centered--col flexed flexed--col is-hidden" id="forms__sign-up">
 				<h1 class="forms__header">Sign up</h1>
-				<form action="./user/profile.html" class="wrapper--fluid flexed flexed--col">
+				<form class="wrapper--fluid flexed flexed--col" id="signUpForm" onsubmit="userSignUp(event)">
+					<div class="toast" id="signUpToast"></div>
 					<input type="text" placeholder="First name" class="forms__input">
 					<input type="text" placeholder="Last name" class="forms__input">
 					<input type="text" placeholder="Email" class="forms__input">
@@ -57,7 +64,7 @@
 
 		</div>
 
-		<div class="auth flexed flexed--col secondary--bg is-hidden" id="sign-up">
+		<div class="auth flexed flexed--col secondary--bg" id="sign-up">
 			<div class="wrapper flexed flexed--col centered centered--col">
 				<h1 class="auth__heading">Hello, Friend!</h1>
 				<p class="auth__subheading">Enter your personal details</p>
@@ -68,6 +75,7 @@
 
 	</main>
 
-	<script src="./js/index.js"></script>
+	<script src="./js/toggle.js"></script>
+	<script src="./js/user.js"></script>
 </body>
 </html>

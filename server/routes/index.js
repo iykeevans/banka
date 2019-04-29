@@ -19,7 +19,7 @@ router.all('/api/v1', (req, res) => {
   });
 });
 
-router.use('/api/v1/auth', user);
+router.use(user);
 router.use('/api/v1/accounts', account);
 router.use('/api/v1/transactions', transaction);
 

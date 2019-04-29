@@ -82,6 +82,30 @@ LAYOUT
 	margin-left: 2em;
 }
 
+.toast {
+	position: absolute;
+	top: 3%;
+}
+
+.result {
+	padding: 1.2em 1em;
+	font-size: 0.9em;
+	color: #fff;
+	border-radius: 5px;
+}
+
+.green {
+	background-color: #43a047 !important;
+}
+
+.yellow {
+	background-color: #ffa000;
+}
+
+.red {
+	background-color: #d32f2f;
+}
+
 
 /***************************
 MODIFIERS
@@ -384,6 +408,10 @@ NAVIGATION
 	width: 20vw;
 }
 
+.side-nav__link--button {
+	font-size: 1em; border: none;
+}
+
 .side-nav__link:hover {
 	color: #313158;
 	background: #F5F5F7;
@@ -619,9 +647,9 @@ TABLE
 		width: 100%;
 	}
 
-	.forms__input {
+	/* .forms__input {
 		width: 100%;
-	}
+	} */
 
 	.forms__header {
 		margin-top: 1em;

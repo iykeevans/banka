@@ -1,30 +1,71 @@
-export const goodSignup = {
-  email: 'fluxie97@yahoo.com',
+export const clientSignup = {
+  email: 'fluxie@yahoo.com',
   firstName: 'chisom',
   lastName: 'ezeani',
-  password: 'hintherland',
+  password: 'slitherman',
   type: 'client',
 };
 
-export const badSignup = {
-  email: 'fluxie97@yahoo.com',
+export const staffSignup = {
+  email: 'dmitri@yahoo.com',
   firstName: 'chisom',
   lastName: 'ezeani',
-  password: 'hintherland',
-  type: 'savings',
+  password: 'slitherman',
+  type: 'staff',
 };
 
-export const goodLogin = {
-  email: 'dummy@mail.com',
-  password: 'zigblayu',
+export const adminSignup = {
+  email: 'spec@yahoo.com',
+  firstName: 'chisom',
+  lastName: 'ezeani',
+  password: 'slitherman',
+  type: 'staff',
+  isAdmin: true,
+};
+
+export const badAdminSignup = {
+  email: 'spec22@yahoo.com',
+  firstName: 'chisom',
+  lastName: 'ezeani',
+  password: 'slitherman',
+  type: 'client',
+  isAdmin: true,
+};
+
+export const badSignup = {
+  email: '',
+  firstName: 'chisom',
+  lastName: 'ezeani',
+  password: 'slitherman',
+  type: 'client',
+};
+
+export const clientLogin = {
+  email: 'fluxie@yahoo.com',
+  password: 'slitherman',
+};
+
+export const staffLogin = {
+  email: 'dmitri@yahoo.com',
+  password: 'slitherman',
+};
+
+export const adminLogin = {
+  email: 'elochi238@gmail.com',
+  password: 'rosemary',
 };
 
 export const badLogin = {
-  email: 'dummymail.com',
+  email: '',
   password: 'zigblayu',
 };
 
 export const invalidLogin = {
-  email: 'dum@mail.com',
+  email: 'dummy@mail.com',
+  password: 'zigblayu',
+};
+
+export const invalidLogin2 = {
+  email: 'fluxie@yahoo.com',
   password: 'zigblayu',
 };

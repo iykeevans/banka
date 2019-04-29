@@ -1,6 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
-import  app from '../server';
+import app from '../server';
+import './users';
+import './accounts';
+import './transactions';
 
 const { expect } = chai;
 chai.use(chaiHttp);
@@ -26,6 +29,18 @@ describe('API Home test suite', () => {
         expect(res.status).to.equal(200);
         expect(res.body.status).to.equal(200);
         expect(res.body.message).to.equal('Welcome to my Banka API');
+        done();
+      });
+  });
+
+  it('should throw an error if app can\'t handle route', (done) => {
+    chai
+      .request(app)
+      .get('/api/v1/funny')
+      .end((err, res) => {
+        expect(res.status).to.equal(400);
+        expect(res.body.status).to.equal(400);
+        expect(res.body).to.have.property('error');
         done();
       });
   });
