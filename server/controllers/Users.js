@@ -7,6 +7,7 @@ import {
 } from '../models';
 import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/Users';
+import { emailSignup } from '../helpers/email';
 
 /**
  * @function signup
@@ -18,12 +19,11 @@ import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/User
  */
 export const signup = async (req, res) => {
   try {
-    let { type } = req.body;
     const {
-      password, firstName, lastName, isAdmin,
+      password, firstName, lastName, isAdmin, type,
     } = req.body;
 
-    type = (req.user) ? 'staff' : 'client';
+    const newType = (req.user) ? type : 'client';
 
     const result = await checkSignup.validate({
       id: shortid.generate(),
@@ -32,7 +32,7 @@ export const signup = async (req, res) => {
       password,
       firstName,
       lastName,
-      type,
+      type: newType,
       isAdmin,
     });
 
@@ -57,7 +57,7 @@ export const signup = async (req, res) => {
         const token = await jwt.sign({ id, email },
           process.env.SECRET,
           { expiresIn: '1h' });
-
+        await emailSignup({ firstname, lastname, email });
         res.status(201).json({
           status: 201,
           data: {

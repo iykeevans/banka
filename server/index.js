@@ -26,7 +26,7 @@ app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use(routes);
 
 app.use((req, res, next) => {
-  const error = new Error('something unexpected happened');
+  const error = new Error('invalid route or route parameters');
   error.status = 400;
   next(error);
 });
