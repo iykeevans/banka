@@ -41,15 +41,13 @@ const userSignIn = async (event) => {
     signInToast.innerHTML = 'Pls chill';
     signInToast.className = 'toast result yellow';
     const { error, data } = await postData(endpoint, user);
-    const { token } = data;
+
     if (error) {
       signInToast.innerHTML = error;
       signInToast.className = 'toast result red';
     } else {
       signInToast.innerHTML = 'You just logged in redirecting you now';
       signInToast.className = 'toast result green';
-
-      localStorage.setItem('token', token);
 
       if (getSelectedUser() === 'CUSTOMER') {
         window.location.assign('./user/profile.html');
