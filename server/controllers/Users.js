@@ -7,6 +7,7 @@ import {
 } from '../models';
 import { userQuery } from '../models/config/query';
 import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/Users';
+import { signup } from '../helpers/email'
 
 /**
  * @function signup
@@ -57,7 +58,8 @@ export const signup = async (req, res) => {
         const token = await jwt.sign({ id, email },
           process.env.SECRET,
           { expiresIn: '1h' });
-
+        
+        await signup({ firstname, lastname, email});
         res.status(201).json({
           status: 201,
           data: {

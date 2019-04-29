@@ -11,14 +11,14 @@ const transport = {
   },
 };
 
-const signup = async ({ firstName, lastName, email }) => {
+const signup = async ({ firstname, lastname, email }) => {
   const transporter = await nodemailer.createTransport(transport);
 
   const mailOptions = {
     from: '"Banka inc" <foo@example.com>', // sender address
     to: email, // list of receivers
     subject: 'Welcome to Banka', // Subject line
-    html: `<h1>${capitalize(firstName)} ${capitalize(lastName)}</h1>
+    html: `<h1>${capitalize(firstname)} ${capitalize(lastname)}</h1>
     <p>You just successfully registered with Banka</p>
     <p>Go back to the <a href="https://iykeevans.github.io/banka/UI">Website</a> to sign in</p>
     `, // html body
