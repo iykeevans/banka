@@ -145,10 +145,17 @@ export const getHistory = async (req, res) => {
       const { owner } = rows[0];
       const transactions = await find({ table: 'transactions', ...req.params });
       if ((type === 'client' && id === owner) || type === 'staff') {
-        res.json({
-          status: 200,
-          data: transactions,
-        });
+        if (transactions.length) {
+          res.json({
+            status: 200,
+            data: transactions,
+          });
+        } else {
+          res.status(404).json({
+            status: 404,
+            error: 'No data here',
+          });
+        }
       } else {
         res.json({
           status: 401,

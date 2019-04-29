@@ -18,12 +18,11 @@ import { checkSignup, checkLogin, checkEmail } from '../helpers/validations/User
  */
 export const signup = async (req, res) => {
   try {
-    let { type } = req.body;
     const {
-      password, firstName, lastName, isAdmin,
+      password, firstName, lastName, isAdmin, type,
     } = req.body;
 
-    type = (req.user) ? 'staff' : 'client';
+    const newType = (req.user) ? type : 'client';
 
     const result = await checkSignup.validate({
       id: shortid.generate(),
@@ -32,7 +31,7 @@ export const signup = async (req, res) => {
       password,
       firstName,
       lastName,
-      type,
+      type: newType,
       isAdmin,
     });
 
